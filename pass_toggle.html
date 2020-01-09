@@ -46,7 +46,8 @@
 
         <div>
             <label for="show-password">
-                <input type="checkbox" name="show-password" id="show-password" onclick="myFunc()">
+                <!-- <input type="checkbox" name="show-password" id="show-password" onclick="myFunc()"> -->
+                <input type="checkbox" name="show-password" id="show-password">
                 Show password
             </label>
         </div>
@@ -57,20 +58,32 @@
     </form>
 
     <script>
+        var password = document.querySelector("#password")
+        var toggle = document.querySelector("#show-password");
 
-        function myFunc() {
-            // console.log("1. clicking the box");
-
-            console.log(document.getElementById("password").type);
-            if (document.getElementById("password").type === "password") {
-                console.log("hi");
-                document.getElementById("password").type = "text";
-                console.log(document.getElementById("password").type);
-
+        // listen for click on the toggle
+        toggle.addEventListener("click", function (event) {
+            if (toggle.checked) {
+                password.type = "text";
             } else {
-                document.getElementById("password").type = "password";
+                password.type = "password"
             }
-        }
+        }, false);
+
+        // MY answer was to put an ONCLICK option on the checkbox input and attach the myFunc below.
+        // function myFunc() {
+        //     console.log("1. clicking the box");
+
+        //     console.log(document.getElementById("password").type);
+        //     if (document.getElementById("password").type === "password") {
+        //         console.log("hi");
+        //         document.getElementById("password").type = "text";
+        //         console.log(document.getElementById("password").type);
+
+        //     } else {
+        //         document.getElementById("password").type = "password";
+        //     }
+        // }
     </script>
 </body>
 
