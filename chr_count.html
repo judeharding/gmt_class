@@ -35,7 +35,8 @@
     <script>
         var count = document.getElementById('character-count');
         var text = document.getElementById('text');
-        text.addEventListener('keyup', countCharacters, false);
+        // text.addEventListener('keyup', countCharacters, false); // can't use key events b/c it doesn fire on mouse-paste
+        text.addEventListener('input', countCharacters, false);
 
 
         function countCharacters(event) {
