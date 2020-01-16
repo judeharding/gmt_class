@@ -1,6 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<h2>Check your console</h2>
+
+
+<script>
+    var hour3 = "3";
+    var hour12 = "12";
+
+    var padstart3 = hour3.padStart(2, "0");
+    var padend3 = hour3.padEnd(5, "999");
+
+    console.log(padstart3);
+    console.log(padend3);
+
+    // -----------------
+
+    var string = "      i LOVE bacon      ";
+    var trimmed = string.trim();
+
+    console.log(string)
+    console.log(trimmed);
+
+    var upper = string.toUpperCase();
+    var lower = string.toLowerCase();
+    console.log(upper);
+    console.log(lower);
+
+    // -----------------
+
+    // ESCAPING quotes
+    var weather = "what's the weather today?";
+    var escweather = 'what\'s the weather today';
+
+
+    // TEMPLATE LITERALS ``
+    // anything between the 2 backticks will be picked up -- ex. tabs
+
+    // template literals can be used in an expression
+    var greeting = "hello world";
+    var msg = "hows the weather today?";
+    var tmpltLit =
+        `<h1>${greeting}</h1>
+    <p>${msg}</p>`
+    console.log(tmpltLit);
+
+    // ternary operators in template literals 
+    var wizards = ['hermione', 'neville', 'gandalf', 'oz'];
+    var showHead = true;
+    var list =
+        `${showHead ? '<h1>Awesome Wizards</h1>' : ''}
+            < ul >
+            ${wizards.map(function (wizard) {
+            return `<li>${wizard}</li>`;
+        }).join('')
+        }
+            </ul >
+        `
+    console.log(list);
+
+    // WORKING WIHT SLICES 
+    var chips = "cape cod potato chips";
+    var lays = chips.replace("cape cod", "lays");
+    console.log(chips);
+    console.log(lays);
+
+    console.log(chips.slice(5)); // starts at 5th sp
+    console.log(chips.slice(5, 8)); // ends at 8th sp
+    console.log(chips.slice(0, -7)); // removes the last 7 chrs
+    console.log(chips.slice(-6)); // only grabs the last 6 chrs
+
+    // WORKING WITH SPLITS 
+    var shoppingList = "soda, turkey, chips, cookie";
+    console.log(shoppingList);
+    // split takes a string and converts it to an array 
+    var menu = shoppingList.split(', ');
+    console.log(menu);
+    var shortList = shoppingList.split(', ', 2); // grabs first 2;
+    console.log(shortList);
+
+    // get the index of
+    console.log(chips.indexOf('cod')); // is case-sensitive
+    console.log(chips.indexOf('Cod')); // is case-sensitive
+    if (chips.indexOf("Cod") > -1) {
+        console.log("it contains that string");
+    } else {
+        console.log("it DOES NOT that string");
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,6 +146,6 @@
         // console.log("the node list is ... " + sandwichNodeList);
     });
 
-</script>
+</script> -->
 
 </html>
