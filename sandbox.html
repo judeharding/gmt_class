@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JUST TESTING</title>
+</head>
+
+<body>
+    <p class="sandwich"> Tuna </p>
+    <p class="sandwich"> Ham </p>
+    <p class="sandwich"> Turkey </p>
+    <p class="sandwich"> PB </p>
+</body>
+
+<script>
+    // Array.prototype is used on an array html elements
+    // forEach method is for arrays only.
+    // querySelectorAll returns a node list that looks like an array but NOT AN ARRAY
+
+
+    var sandwichNodeList = document.querySelectorAll(".sandwich");
+    // converts this node list above into an array
+    var sandwiches = Array.prototype.slice.call(sandwichNodeList);
+    sandwiches.forEach(function (sandwich, index) {
+        console.log(sandwich.textContent);
+        // console.log("the node list is ... " + sandwichNodeList);
+    });
+
+</script>
+
+</html>
