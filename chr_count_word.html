@@ -30,30 +30,34 @@
     <label for="text">Enter your text below.</label>
     <textarea id="text"></textarea>
 
-    <!-- <p>You've written <strong><span id="character-count">0</span> characters</strong>.</p> -->
+    <p id="count" aria-live="polite">You've written <strong><span id="character-count">0</span> characters</strong>.</p>
 
-    <p id="app" aria-live="polite">You've written <strong><span id="word-count">0</span> words</strong>
+    <!-- <p id="app" aria-live="polite">You've written <strong><span id="word-count">0</span> words</strong>
         and <strong><span id="character-count">0</span> characters</strong>.
-    </p>
+    </p> -->
 
     <script>
         var text = document.querySelector("#text");
-        var wordCount = document.querySelector("#word-count");
-        var charCount = document.querySelector("#character-count");
+        // var wordCount = document.querySelector("#word-count");
+        // var charCount = document.querySelector("#character-count");
+        var count = document.querySelector("#count");
 
         text.addEventListener("input", function () {
             // var words = text.value.split(" ").filter(function (word) {
             var words = text.value.split(/[\n\r\s]+/g).filter(function (word) {  // regex pattern /[\n\r\s]+/g
                 return word.length > 0; //only words with chars will return -- not a bunch of spaces
             });
-            wordCount.textContent = words.length;
 
-            charCount.textContent = text.value.length;
-        });
+            // wordCount.textContent = words.length;
+            // charCount.textContent = text.value.length;
 
-        var app = document.querySelector("#app");
-        setTimeout(function () {
-        }, 5000);
+            // display the word and char counts 
+            count.innerHTML = "You\'ve written <strong>" + words.length + " words</strong> and <strong> " + text.value.length + " characters </strong>.";
+        }, false);
+
+        // var app = document.querySelector("#app");
+        // setTimeout(function () {
+        // }, 5000);
 
         // var characterCount = document.getElementById('character-count');
         // var wordCount = document.getElementById('word-count');
