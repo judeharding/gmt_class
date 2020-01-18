@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Project Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Styles -->
+    <style type="text/css">
+        body {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 30em;
+            width: 88%;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .row label {
+            flex: 1;
+            margin-right: 0.5em;
+        }
+
+        .row input {
+            flex: 2;
+        }
+
+        #per-person {
+            padding-top: 1em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Tip Calculator</h1>
+
+    <form id="tip-calculator">
+        <div class="row">
+            <label for="amount">Bill Amount</label>
+            <input type="text" name="amount" id="amount">
+        </div>
+
+        <div class="row">
+            <label for="tip">Tip %</label>
+            <input type="text" name="tip" id="tip">
+        </div>
+
+        <div class="row">
+            <label for="people">Number of People</label>
+            <input type="text" name="people" id="people">
+        </div>
+
+        <div id="per-person" aria-live="polite"></div>
+
+        <p class="text-right">
+            <button>Calculate Tip</button>
+        </p>
+    </form>
+
+
+    <!-- Scripts -->
+    <script>
+        // 1.  VAR the elements that you will need. 
+        var calculator = document.querySelector("#tip-calculator");
+        var amount = document.querySelector("#amount");
+        var tip = document.querySelector("#tip");
+        var people = document.querySelector("#people");
+        var perPerson = document.querySelector("#per-person");
+
+        // 3. CALCULATE HOW MUCH EACH PERSON OWES 
+        var calculateTip = function () {
+            //  magic
+            var tipPercent = parseInt(tip.value, 10) / 100;
+            var amountValue = parseFloat(amount.value);
+            console.log(tipPercent);
+            console.log(amountValue);
+            var tipAmount = amountValue * tipPercent;
+            var total = amountValue + tipAmount;
+            var perPersonAmount = total / parseInt(people.value, 10);
+
+            // 3.1 UPDATE UI
+            perPerson.textContent = "Each Person Owes $ " + perPersonAmount.toFixed(2).toString();
+
+        };
+
+        // 2.  ADD an event listener on enter or button of the FORM
+        calculator.addEventListener("submit", function (event) {
+
+            // 2.1  STOP form from trying to submit to the server 
+            // might be able to eliminate this by changing the submit to just a plain button 
+            event.preventDefault();
+            console.log("button clicked but not going to server");
+
+            // 2.2  MAKE SURE all fields have info before calculating tip 
+            if (amount.value.length < 1 || tip.value.length < 1 || people.value.length < 1) {
+                console.log("Fill out all the fields");
+
+            } else {
+                console.log("All Fields entered");
+                console.log(calculateTip());
+            }
+        }, false);
+    </script>
+</body>
+
+</html>
