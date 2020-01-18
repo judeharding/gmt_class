@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<h2>Check your console</h2>
+<h2>STRINGS AND NUMBERS</h2>
 
 
 <script>
@@ -87,6 +87,73 @@
     } else {
         console.log("it DOES NOT that string");
     }
+
+    // CONVERT STRINGS TO NUMBRES 
+    // parseint takes 2 args -- the string and a radix (required)
+    var fortytwo = parseInt("42", 10);
+    var fortytwopx = parseInt("42px", 10);
+
+    console.log(fortytwo);//42
+    console.log(fortytwopx);//42
+
+    var pi = parseFloat("3.146780");
+    var pitext = parseFloat("3.14zzzzz");
+    var num = parseFloat(".3");
+
+    console.log(pi);
+    console.log(pitext);//3.14
+    console.log(num);//.3
+
+    var int = Number("123");
+    var float = Number("12.388888");
+    var pie = Number("3.14xxxxre");
+
+    console.log(int);
+    console.log(float);
+    console.log(pie);//NaN
+
+    // MODIFY NUMBERS 
+    var peye = 3.141592;
+    var pifixed = peye.toFixed(2);
+    console.log(pifixed);//3.14
+    console.log("toString " + pi.toString());
+
+    var eleven = 11;
+    var elevefix = eleven.toFixed(3);
+    console.log(elevefix);//11.000
+
+    // PEMDAS is common. It stands for Parentheses, Exponents, 
+    // Multiplication/Division, Addition/Subtraction 
+    // %=modulus and gives the remainder
+
+    console.log(2 !== 1);
+    // = is an assignment
+    // == is a coerce comparison
+    // === is a comparison AND typeOf
+
+    // ADVANCED MATH 
+
+    var num1 = Math.abs(42.222);// returns the ABSOLUTE, positive number
+    var num2 = Math.abs(-42); // returns the ABSOLUTE, positive number
+
+    var num3 = Math.floor(42);//42
+    var num4 = Math.floor(3.14);//3
+    var num5 = Math.floor(-3.14);//-4
+
+    var num6 = Math.ceil(42);//42
+    var num7 = Math.ceil(3.14);//4
+    var num8 = Math.ceil(-3.14);//-3
+
+    var num9 = Math.max(42, 3.14, 27);//42
+    var num10 = Math.max(-42, -3.14, -27);//-3.14
+
+    var num11 = Math.min(42, 3.14, 27);//3.14
+    var num12 = Math.min(-42, -3.14, -27);//-42
+
+    var num13 = Math.random(); // between >0 <1
+    console.log(num13);
+    console.log(Math.random());
+
 </script>
 
 
@@ -122,7 +189,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>JUST TESTING</title>
+    <title>DOM MANIPULATION</title>
 </head>
 
 <body>
