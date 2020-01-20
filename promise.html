@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>PROMISES</h3>
+</body>
+
+<script>
+    // Create a Promise object
+    // A Promise is a JavaScript object that represents an asynchronous function.
+    var sayHello = new Promise(function (resolve, reject) {
+
+        reject("Unable to say hi");
+
+        // In 5 seconds, resolve the Promise.
+        // Pass along "Hi, universe!" to any callback methods
+        setTimeout(function () {
+            resolve('Hi, universe!');
+        }, 5000);
+    });
+
+    // After 5 seconds, if the Promise resolves,
+    // this will log "Hi, universe!" into the console
+    sayHello.then(function (theresolvefromabovemsg) {
+        console.log(theresolvefromabovemsg);
+        // will console the error 
+    }).catch(function (err) {
+        console.warn(err);
+    });
+
+    // CHAINING
+    var count = new Promise(function (resolve, reject) {
+        resolve(1);
+    });
+    count.then(function (num) {
+        console.log(num);
+        return (num + 1);
+    }).then(function (num) {
+        console.log(num);
+        return (num + 1);
+    })
+        .then(function (num) {
+            console.log(num);
+            return (num + 1);
+        })
+        .then(function (num) {
+            console.log(num);
+            return (num + 1);
+        });
+
+    // CACHING A PROMISE TO A VARIABLE
+    //return a new promise
+    var getTheAnswer = function (revealAns) {
+        return new Promise(function (resolve, reject) {
+            if (revealAns) {
+                resolve("the answer is 42");
+            } else {
+                reject("you aren't ready yet")
+            }
+        });
+    };
+
+
+
+</script>
+
+</html>
