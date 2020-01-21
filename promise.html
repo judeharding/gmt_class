@@ -24,6 +24,7 @@
         setTimeout(function () {
             resolve('Hi, universe!');
         }, 5000);
+
     });
 
     // After 5 seconds, if the Promise resolves,
@@ -34,6 +35,9 @@
     }).catch(function (err) {
         console.warn(err);
     });
+
+    // BECAUSE reject() runs before resolve() does, the catch() callback 
+    // method will run and show the error message that was passed in.
 
     // CHAINING
     var count = new Promise(function (resolve, reject) {
@@ -66,6 +70,30 @@
             }
         });
     };
+
+    var question = getTheAnswer(true);
+
+    // this will run 5 sec later 
+    setTimeout(function () {
+        question.then(function (answer) {
+
+        });
+    });
+    console.log(question);
+
+    var newhello = new Promise(function (resolve, reject) {
+        reject("unable to say you suck");
+
+        setTimeout(function () {
+            resolve("hi universeee");
+        }, 3000);
+    });
+
+    newhello.then(function (msg) {
+        console.log(msg);
+    }).catch(function (err) {
+        console.warn(err);
+    });
 
 
 
