@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Getting Array Items</h2>
+</body>
+<script>
+    // Determine MVP to get job done -- less is more
+    // 1.  VAR the elements that you will need. 
+    // 2.  ADD an event listener to trigger an action
+    // 3.  Magic that needs to get done
+    // 4.  Update UI maybe with textContent
+
+
+    var sandwiches = ['turkey', 'tuna', 'ham', 'pb&j'];
+
+    // returns 0
+    var turkey = sandwiches.indexOf('turkey');
+
+    // returns 3
+    var pbAndj = sandwiches.indexOf('pb&j');
+
+    // returns -1
+    var grilledCheese = sandwiches.indexOf('grilled cheese');
+
+    console.log(turkey);
+    console.log(pbAndj);
+    console.log(grilledCheese);
+
+    if (sandwiches.indexOf('turkey') > -1) {
+        console.log('Make a turkey sandwich, please');
+    }
+
+    sandwiches.push("chicken", "blt");
+    console.log(sandwiches);
+
+</script>
+
+</html>
