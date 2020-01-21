@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rand-Ron</title>
+</head>
+
+<body>
+    <h3>Random Ron</h3>
+
+    <img src="http://giphygifs.s3.amazonaws.com/media/iofbYa67AbBg4/giphy.gif">
+
+    <blockquote id="quote" aria-live="polite">
+        <em>Getting a fresh quote...</em>
+    </blockquote>
+
+    <p>
+        <button id="get-quote">More Ron</button>
+    </p>
+
+    <!-- <div id="randron" aria-live="polite"> </div> -->
+    <!-- <button onclick="myFunction()">More Ron</button> -->
+
+
+</body>
+
+<script>
+    // ANSWER -- Get the blockquote and button elements
+    var quote = document.querySelector('#quote');
+    var btn = document.querySelector('#get-quote');
+
+    // Get a Ron Swanson quote
+    fetch('http://ron-swanson-quotes.herokuapp.com/v2/quotes').then(function (response) {
+        if (response.ok) {
+            return response.json();
+        } else {
+            return Promise.reject(response);
+        }
+    }).then(function (data) {
+        quote.textContent = data[0];
+    }).catch(function (error) {
+        quote.textContent = '[Something went wrong, sorry!] I have a joke for you... The government in this town is excellent, and uses your tax dollars efficiently.';
+    });
+
+    // Get a fresh quote and render it into the DOM
+    var getQuote = function () {
+        // Get a Ron Swanson quote
+        fetch('http://ron-swanson-quotes.herokuapp.com/v2/quotes').then(function (response) {
+            // The API call was successful!
+            if (response.ok) {
+                return response.json();
+            } else {
+                return Promise.reject(response);
+            }
+        }).then(function (data) {
+            quote.textContent = data[0];
+        }).catch(function (error) {
+            quote.textContent = '[Something went wrong, sorry!] I have a joke for you... The government in this town is excellent, and uses your tax dollars efficiently.';
+        });
+    };
+
+    getQuote();
+
+    // Get a quote when the #get-quote button is clicked
+    btn.addEventListener('click', getQuote, false);
+
+// ------------------------
+// // THIS IS MY ANSWER AND IT WORKS BUT IT IS INEFFICIENT B/C IT FORCES A REFRESH OF THE PAGE
+//     fetch("http://ron-swanson-quotes.herokuapp.com/v2/quotes").then(function (response) {
+
+//         if (response.ok) {
+//             console.log("Success!!!");
+//             return response.json();
+//         } else {
+//             return Promise.reject(response);
+//         }
+//     }).then(function (data) {
+//         // this is the json data from our response 
+//         console.log(data);
+//         document.getElementById("randron").innerHTML = (data);
+//     }).catch(function (err) {
+//         console.log("something went wrong", err);
+//     });
+
+
+//     function myFunction() {
+//         location.reload();
+//     }
+
+
+</script>
+
+</html>
