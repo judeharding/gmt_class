@@ -57,6 +57,7 @@
                 // Recursively call getQuote() to fetch another quote instead
                 // Then return to quit the function
                 if (quotes.indexOf(data[0]) > -1) {
+                    // RECURSION
                     getQuote();
                     return;
                 } else {

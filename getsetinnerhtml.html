@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>xxx</h2>
+
+    <div>
+        <p> Hello World</p>
+    </div>
+
+    <div id="app"></div>
+
+    <div id="app2"></div>
+
+</body>
+<script>
+
+    var wizards = ['Hermione', 'Neville', 'Gandalf'];
+    var app = document.querySelector("#app");
+
+    // .map creates a new array out of existing array 
+    var html = wizards.map(function (wizard) {
+        return "<li>" + wizard + "</li>";
+    }).join("");
+
+    console.log(html);
+
+    app.innerHTML = "<ul>" + wizards.map(function (wizard) {
+        return "<li>" + wizard + "</li>";
+    }).join("") + "</ul>";
+
+    // OR 
+    var html2 = "<ul></ul>";
+    wizards.forEach(function (wizard) {
+        html2 += "<ul>" + "<li>" + wizard + "</li>" + "</ul>";
+    });
+    app2.innerHTML = html2;
+
+
+    // ----------------
+    // var elem = document.querySelector('div');
+
+    // // Get HTML content
+    // var html = elem.innerHTML;
+
+    // // Set HTML content
+    // elem.innerHTML = 'We can dynamically change the HTML. We can even include HTML elements like <a href="#">this link</a>.';
+
+    // // Add HTML to the end of an element's existing content
+    // elem.innerHTML += ' Add this after what is already there.';
+
+    // // Add HTML to the beginning of an element's existing content
+    // elem.innerHTML = 'We can add this to the beginning. ' + elem.innerHTML;
+
+    // // You can inject entire elements into other ones, too
+    // elem.innerHTML += '<p>A new paragraph</p>';
+
+</script>
+
+</html>
