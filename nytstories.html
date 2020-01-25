@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>What to read today</title>
+
+    <style type="text/css">
+        body {
+            margin: 1em auto;
+            max-width: 40em;
+            width: 88%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>What to read today</h1>
+
+    <div id="app"></div>
+
+    <script>
+        var nyt;
+        var app = document.querySelector("#app");
+        var key = "kmV2Q9qUq71GqgvMIv7xGL9v2ZWThHu3";
+        var keysecret = "ObDGoMi5MwwCLPK0";
+        var nytAppId = "a4fb4f08-c74e-47f7-afa8-097411f387b6";
+
+
+        fetch('https://api.nytimes.com/svc/topstories/v2/home.json?api-key=kmV2Q9qUq71GqgvMIv7xGL9v2ZWThHu3')
+            .then(function (response) {
+                if (response.ok) {
+                    console.log("ok");
+                    return response.json();
+                } else {
+                    console.log("not ok");
+                    return Promise.reject(response);
+                }
+            }).then(function (data) {
+                console.log(data);
+                var dataJSON = JSON.stringify(data.results[0]);
+
+                app.innerHTML = dataJSON;
+            }).catch(function (error) {
+                app.textContent = '[Something went wrong, sorry!] I have a joke for you... The government in this town is excellent, and uses your tax dollars efficiently.';
+            });
+
+
+    </script>
+</body>
+
+</html>
