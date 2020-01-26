@@ -26,8 +26,20 @@
         var keysecret = "ObDGoMi5MwwCLPK0";
         var nytAppId = "a4fb4f08-c74e-47f7-afa8-097411f387b6";
 
+        var render = function (articles) {
 
-        fetch('https://api.nytimes.com/svc/topstories/v2/home.json?api-key=kmV2Q9qUq71GqgvMIv7xGL9v2ZWThHu3')
+            app.innerHTML = articles.map(function (article) {
+                var html =
+                    '<article>' +
+                    '<h2><a href="' + article.url + '">' + article.title + '</a></h2>' +
+                    '<p>' + article.byline + '</p>' +
+                    '<p>' + article.abstract + '</p>' +
+                    '</article>';
+                return html;
+            }).join('');
+        };
+
+        fetch('https://api.nytimes.com/svc/topstories/v2/home.json?api-key=' + key)
             .then(function (response) {
                 if (response.ok) {
                     console.log("ok");
@@ -38,9 +50,12 @@
                 }
             }).then(function (data) {
                 console.log(data);
-                var dataJSON = JSON.stringify(data.results[0]);
 
-                app.innerHTML = dataJSON;
+                render(data.results);
+                // my answer
+                // var dataJSON = JSON.stringify(data.results);
+                // app.innerHTML = dataJSON;
+
             }).catch(function (error) {
                 app.textContent = '[Something went wrong, sorry!] I have a joke for you... The government in this town is excellent, and uses your tax dollars efficiently.';
             });
