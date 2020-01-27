@@ -12,11 +12,34 @@
     <h2>xxx</h2>
 </body>
 <script>
-// Determine MVP to get job done -- less is more
-// 1.  VAR the elements that you will need. 
-// 2.  ADD an event listener to trigger an action
-// 3.  Magic that needs to get done
-// 4.  Update UI maybe with textContent
+    // Determine MVP to get job done -- less is more
+    // 1.  VAR the elements that you will need. 
+    // 2.  ADD an event listener to trigger an action
+    // 3.  Magic that needs to get done
+    // 4.  Update UI maybe with textContent
+
+    // abstract your code -- think dry 
+    //     anything that you do multiple times -- don't copy/paste
+    //         create a function for the boiler plate stuff
+    //             and variables [] for the variations
+    //             and a forEach or another loop for the execution
+
+    // BAD IDEAto use innerHTML with API calls b/c you are open to a XSS attack
+    // ex - this will execute
+    // // This WILL run
+    // div.innerHTML = '<img src=x onerror="alert(\'XSS Attack\')">';
+    // just "sanitize" your html by using textContent instead of innerHTML
+
+    // var sanitizeHTML = function (str) {
+    //     var temp = document.createElement('div');
+    //     temp.textContent = str;
+    //     return temp.innerHTML;
+    // };
+    // along with 
+    // Renders <h1>&lt;img src=x onerror="alert('XSS Attack')"&gt;</h1>
+    // div.innerHTML = '<h1>' + sanitizeHTML('<img src=x onerror="alert(\'XSS Attack\')">') + '</h1>';
+
+
 
 
 </script>
