@@ -26,6 +26,8 @@
         var keysecret = "ObDGoMi5MwwCLPK0";
         var nytAppId = "a4fb4f08-c74e-47f7-afa8-097411f387b6";
 
+
+        // don't want to use the forEach method b/c it repaints the UI every time
         var render = function (articles) {
 
             app.innerHTML = articles.map(function (article) {
