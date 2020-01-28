@@ -12,32 +12,43 @@
     <h2>xxx</h2>
 </body>
 <script>
-    // Determine MVP to get job done -- less is more
-    // 1.  VAR the elements that you will need. 
-    // 2.  ADD an event listener to trigger an action
-    // 3.  Magic that needs to get done
-    // 4.  Update UI maybe with textContent
+    // ARRAYS AND OBJECTS
+    var sandwiches = ["turkey", "tuna", "ham", "chix"];
+    // get item
+    console.log(sandwiches[1]); // tuna
 
-    // abstract your code -- think dry 
-    //     anything that you do multiple times -- don't copy/paste
-    //         create a function for the boiler plate stuff
-    //             and variables [] for the variations
-    //             and a forEach or another loop for the execution
+    var turkey = sandwiches.indexOf("turkey");
+    // get position of item in array
+    console.log(" is in the array at the position of " + turkey); // 0
+    // console.log(cheese); // -1 NOT DEFINED IN ARRAY
 
-    // BAD IDEAto use innerHTML with API calls b/c you are open to a XSS attack
-    // ex - this will execute
-    // // This WILL run
-    // div.innerHTML = '<img src=x onerror="alert(\'XSS Attack\')">';
-    // just "sanitize" your html by using textContent instead of innerHTML
+    var threeLtrs = sandwiches.find(function (sandwich) {
+        //find an item in the array
+        return sandwich.length === 3;
+        // OR (implied above)
+        // if (sandwiches === "turkey") {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+    });
+    console.log(threeLtrs); //returns ham b/c it's first
 
-    // var sanitizeHTML = function (str) {
-    //     var temp = document.createElement('div');
-    //     temp.textContent = str;
-    //     return temp.innerHTML;
-    // };
-    // along with 
-    // Renders <h1>&lt;img src=x onerror="alert('XSS Attack')"&gt;</h1>
-    // div.innerHTML = '<h1>' + sanitizeHTML('<img src=x onerror="alert(\'XSS Attack\')">') + '</h1>';
+    // FOR LOOP
+    for (var i = 0; i < sandwiches.length; i++) {
+        // i may interfere with other "indexes" in other loops
+        // console.log(i + sandwiches[i]);
+        // skip to the next loop
+        if (sandwiches[i] === "ham") continue; // break will stop the loop
+        console.log(i + sandwiches[i]);
+    }
+    // for looping thru ARRAYS in this loop, the index remains 
+    // with THIS loop but continue and break don't work here
+    sandwiches.forEach(function (sandwich, i) {
+        console.log(i);
+        console.log(sandwich);
+
+    });
 
 
 
@@ -46,8 +57,35 @@
 
 </html>
 
+<!-- sandbox  -->
+<!-- // Determine MVP to get job done -- less is more
+// 1.  VAR the elements that you will need. 
+// 2.  ADD an event listener to trigger an action
+// 3.  Magic that needs to get done
+// 4.  Update UI maybe with textContent
 
+// abstract your code -- think dry 
+//     anything that you do multiple times -- don't copy/paste
+//         create a function for the boiler plate stuff
+//             and variables [] for the variations
+//             and a forEach or another loop for the execution
 
+// BAD IDEAto use innerHTML with API calls b/c you are open to a XSS attack
+// ex - this will execute
+// // This WILL run
+// div.innerHTML = '<img src=x onerror="alert(\'XSS Attack\')">';
+// just "sanitize" your html by using textContent instead of innerHTML
+
+// var sanitizeHTML = function (str) {
+//     var temp = document.createElement('div');
+//     temp.textContent = str;
+//     return temp.innerHTML;
+// };
+// along with 
+// Renders <h1>&lt;img src=x onerror="alert('XSS Attack')"&gt;</h1>
+// div.innerHTML = '<h1>' + sanitizeHTML('<img src=x onerror="alert(\'XSS Attack\')">') + '</h1>'; -->
+
+<!-- -------------- -->
 
 <!-- <h2>STRINGS AND NUMBERS</h2>
 

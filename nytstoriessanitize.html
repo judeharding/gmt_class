@@ -56,13 +56,19 @@
             app.innerHTML += "<h2>" + section + "</h2>" + articles.map(function (article) {
                 var html =
                     '<article>' +
-                    '<h3><a href="' + article.url + '">' + article.title + '</a></h3>' +
-                    '<p>' + article.byline + '</p>' +
-                    '<p>' + article.abstract + '</p>' +
+                    '<h3><a href="' + sanitizeHTML(article.url) + '">' + sanitizeHTML(article.title) + '</a></h3>' +
+                    '<p>' + sanitizeHTML(article.byline) + '</p>' +
+                    '<p>' + sanitizeHTML(article.abstract) + '</p>' +
                     '</article>';
                 return html;
             }).join('');
 
+        };
+
+        var sanitizeHTML = function (data) {
+            var temp = document.createElement('div');
+            temp.textContent = data;
+            return temp.innerHTML;
         };
 
         // DRY 
@@ -76,11 +82,13 @@
                 }
             }).then(function (data) {
 
-                var sanitizeHTML = function (data) {
-                    var temp = document.createElement('div');
-                    temp.textContent = str;
-                    return temp.innerHTML;
-                };
+                // var sanitizeHTML = function (data) {
+                //     var temp = document.createElement('div');
+                //     temp.textContent = data;
+                //     return temp.innerHTML;
+                // };
+
+                // sanitizeHTML(data);
 
                 // Get the first few articles
                 var firstFew = getFirstFew(data.results);
