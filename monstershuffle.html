@@ -115,7 +115,7 @@
         var test = document.querySelector("test");
         var monster = [];
 
-        // Shuffle the array of monsters, 
+        // Fisher / Yates Method Shuffle the array of monsters, 
 
         var monsterShuffle = function (array) {
             var currentIndex = array.length;
@@ -167,6 +167,15 @@
 
         };
 
+        // Create the HTML and inject it into the DOM
+        app.innerHTML = '<div class="row">' + monsters.map(function (monster) {
+            var html =
+                '<div class="grid">' +
+                '<img alt="' + monster + '" src="' + monster + '.svg">' +
+                '</div>';
+            return html;
+        }).join('') + '</div>';
+
         // var monster01img = document.createElement("img");
         // monster01img.src = <svg width="80" height="47" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title-monster1">
         //     <title id="title-monster1">Monster 1</title>
@@ -182,7 +191,7 @@
 
 
         // and render the matching SVG files into the #app element.
-        document.getElementById("test").innerHTML = monster;
+        // document.getElementById("test").innerHTML = monster;
         render();
 
         // document.getElementById("shuffle").addEventListener("click", monsterShuffle);

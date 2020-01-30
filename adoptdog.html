@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Project Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Styles -->
+    <style type="text/css">
+        body {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 40em;
+            width: 88%;
+        }
+
+        h2 {
+            margin-top: 2em;
+        }
+
+        img {
+            height: auto;
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Adoptable Dogs</h1>
+
+    <div id="dogs">Fetching our adoptable dogs...</div>
+
+
+    <!-- Scripts -->
+    <script>
+        var apiData = [
+            {
+                name: 'Rufus',
+                breeds: [
+                    'Lab',
+                    'German Shepard',
+                    'Border Collie'
+                ],
+                age: 'Adult',
+                size: 'Medium',
+                gender: 'Male',
+                details: 'No Cats, No Dogs',
+                photo: 'img/rufus.jpg'
+            },
+            {
+                name: 'kylie jane',
+                breeds: [
+                    'Shih Tzu'
+                ],
+                age: 'Puppy',
+                size: 'Small',
+                gender: 'Female',
+                details: 'Neutered',
+                photo: 'img/kylie.jpg'
+            },
+            {
+                name: 'jacque ',
+                breeds: [
+                    'Chihuahua',
+                    'Rat Terrier'
+                ],
+                age: 'Senior',
+                size: 'Small',
+                gender: 'Male',
+                details: 'No Cats, No Dogs, Neutered, Special Medical Needs',
+                photo: 'img/jacque.jpg'
+            },
+            {
+                name: 'Elsa',
+                breeds: [
+                    'Irish Wolfhound',
+                    'Wirehaired Terrier',
+                    'Staffordshire Terrier'
+                ],
+                age: 'Adult',
+                size: 'Extra Large',
+                gender: 'Female',
+                details: 'Neutered',
+                photo: 'img/elsa.jpg'
+            },
+            {
+                name: 'Colt',
+                breeds: [
+                    'Staffordshire Terrier',
+                    'Dalmation',
+                    'Lab'
+                ],
+                age: 'Puppy',
+                size: 'Large',
+                gender: 'Male',
+                details: '',
+                photo: 'img/colt.jpg'
+            }
+        ];
+
+        // my code 
+        for (let index = 0; index < apiData.length; index++) {
+            const dogIndex = apiData[index];
+            console.log(dogIndex);
+            // console.log("Dog Index Is ... " + dogIndex);
+            const breedsx = dogIndex.breeds;
+            console.log("EACH DOG BREED IS ... " + breedsx);
+
+        }
+
+
+        // Create a list of available breeds, and how many of each breed there are
+        var getSummary = function () {
+            // Template
+            // <h2>Available Breeds</h2>
+            // <ul>
+            // 		<li>{Breed Name} ({Breed Quantity})</li>
+            // 		<li>Ex. Lab (2)</li>
+            // </ul>
+
+            //Get Dog Breed Quantities
+            var dogBreeds = apiData.reduce(function (breeds, dog) {
+                dog.breeds.forEach(function (breed) {
+                    if (breeds[breed]) {
+                        breeds[breed] = breeds[breed] + 1;
+                    } else {
+                        breeds[breed] = 1;
+                    }
+                });
+                return breeds;
+            }, {});
+            console.log(dogBreeds);
+
+            // if there are no dogs, do nothing
+            if (Object.keys(dogBreeds).length < 1) {
+                return;
+            }
+
+            // Create UI Markup of Dog Breed Quantites
+            // RETURNING OBJECT DATA 
+            var html = '';
+            // loop thru breeds and add markup
+            for (var key in dogBreeds) {
+                if (dogBreeds.hasOwnProperty(key)) {
+                    // var element = object[key];
+                    html += '<li>' + key + ' (' + dogBreeds[key] + ')</li>';
+                }
+            }
+
+            return '<<h2>Available Breeds </h2><ul>' + html + '</ul>';
+        };
+
+        // Create a list of adoptable dogs
+        var getDogs = function () {
+            // Template
+            // <h2>{Dog Name}</h2>
+            // <p><img alt="A photo of {Dog Name}" src="photo.jpg"></p>
+            //
+            // <p>
+            // 		Age: {age}<br>
+            // 		Size: {size}<br>
+            // 		Gender: {gender}<br>
+            // 		Breeds: {breed1}, {breed2}
+            // </p>
+            //
+            // <strong>Other Details:</strong>
+            // <ul>
+            // 		<li>{detail1: ex. No Cats}</li>
+            // </ul>
+            return apiData.map(function (dog) {
+                // RETURNING ARRAY DATA
+                var html =
+                    '<h2>' + dog.name + '</h2 >' +
+                    '<p><img alt="a photo of ' + dog.name + ' " src="' + dog.photo + '"></p>' +
+                    '<p>' +
+                    'Age: ' + dog.age + '<br>' +
+                    'Size: ' + dog.size + '<br>' +
+                    'Gender:  ' + dog.gender + '<br>' +
+                    'Breeds:  ' + dog.breeds.join(', ') +
+                    '</p>' +
+                    '<strong>Other Details:</strong>' +
+                    '<ul>' +
+                    dog.details.split(', ').map(function (detail) {
+                        if (detail.length < 1) return '<li><em>No Additional Details</em></li>';
+                        return '<li>' + detail + '</li>';
+                    }).join('') +
+                    '</ul>'
+                    ;
+                return html;
+            }).join("");
+        };
+
+        // Load list of adoptable dogs into the DOM
+        var dogList = document.querySelector('#dogs');
+        dogList.innerHTML = getSummary() + getDogs()
+
+    </script>
+</body>
+
+</html>

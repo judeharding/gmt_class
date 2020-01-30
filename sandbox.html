@@ -50,6 +50,82 @@
 
     });
 
+    // ---------
+    var lunch = {
+        sandwich: "ham",
+        snack: "chips",
+        drink: "soda",
+        dessert: "cookie",
+        guests: 3,
+        alcohol: false,
+    };
+
+    // for/in loops work on OBJECTS will also work on arrays
+    for (var key in lunch) {
+        // checking for a key
+        if (lunch.hasOwnProperty(key)) {
+            var element = sandwiches[key];
+            console.log("FOR IN LOOPs..." + key); // returns the key
+            console.log("FOR IN LOOP..." + lunch[key]); // returns the value
+        }
+    }
+
+    for (var key in lunch) {
+        if (lunch.hasOwnProperty(key)) {
+            // IMPLIED IF STATEMENT - works
+            if (key === "drink") break;
+            console.log("BREAKING... " + lunch[key]);
+        }
+    }
+
+    for (var key in lunch) {
+        if (lunch.hasOwnProperty(key)) {
+            // ACTUAL IF STATEMENT - doesn't work 
+            if (key === "drink") {
+                console.log("BREAKING2... " + lunch[key]);
+                break;
+            }
+        }
+    }
+
+    // list of keys in an object
+    var keys = Object.keys(lunch);
+    console.log(keys);
+
+    // list of all keys and values in an object
+    var entries = Object.entries(lunch);
+    console.log(entries);  //returns an array of arrays
+
+    // delete a key/value from an OBJECT 
+    delete lunch.alcohol;
+    console.log(lunch);
+
+    // merging objects 
+    var obj1 = {
+        apple: 0,
+        banana: {
+            weight: 52,
+            price: 100
+        }, cherry: 97
+    };
+
+    var obj2 = {
+        banana: {
+            price: 200
+        },
+        cuke: 100
+    };
+    var obj3 = {
+        apple: "yum",
+        pie: 3.14,
+        berry: true
+    };
+    var merged = Object.assign(obj1, obj2, obj3);
+    console.log(merged);  //merged keys will only hold the last values merged
+
+    // create NEW object without overwriting the existing objects 
+    var mergedNewObj = Object.assign({}, obj1, obj2, obj3);
+    console.log(mergedNewObj);
 
 
 
