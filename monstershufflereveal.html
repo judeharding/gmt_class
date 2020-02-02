@@ -39,7 +39,7 @@
 
     <h1>Monsters! - Reveal</h1>
 
-    <div id="app"></div>
+    <div id="app" aria-live="polite"></div>
 
     <footer>
         <hr>
@@ -56,6 +56,10 @@
     </footer>
 
     <script>
+        //
+        // Variables
+        //
+
         // The monsters and socks
         var monsters = [
             'monster1',
@@ -74,6 +78,11 @@
 
         // Get the #app element
         var app = document.querySelector('#app');
+
+
+        //
+        // Methods
+        //
 
 		/**
 		 * Randomly shuffle an array
@@ -102,17 +111,55 @@
 
         };
 
+		/**
+		 * Handle click events
+		 * @param  {Event} event The event object
+		 */
+        var clickHandler = function (event) {
+
+            // Check if clicked element or it's parent has a [data-monster-id] attribute
+            // If not, it's not a monster
+            // return and stop running our callback function
+            var monster = event.target.closest('[data-monster-id]');
+            if (!monster) return;
+
+            // Get the monster's index in the array
+            var id = monster.getAttribute('data-monster-id');
+
+            // Update the HTML for the button's parent element
+            // This will replace the button so that the content can't be clicked again
+            // We'll use the id to get the monster from our shuffled array
+            monster.parentNode.innerHTML = '<img alt="' + monsters[id] + '" src="' + monsters[id] + '.svg">';
+
+        };
+
+
+        //
+        // Inits & Event Listeners
+        //
+
         // Shuffle the monsters array
         shuffle(monsters);
 
         // Create the HTML and inject it into the DOM
-        app.innerHTML = '<div class="row">' + monsters.map(function (monster) {
-            var html =
-                '<div class="grid">' +
-                '<img alt="' + monster + '" src="' + monster + '.svg">' +
-                '</div>';
-            return html;
-        }).join('') + '</div>';
+        // A button element is focusable and conveys to screen readers that it can be clicked
+        // The data-monster-id stores the index of the monster in our array
+        app.innerHTML =
+            '<p>Click a door to reveal a monster. Try not to find the sock.</p>' +
+            '<div class="row">' +
+            monsters.map(function (monster, index) {
+                var html =
+                    '<div class="grid" aria-live="polite">' +
+                    '<a data-monster-id="' + index + '" href="#">' +
+                    '<img alt="Click the door to see what\'s behind it" src="door.svg">' +
+                    '</a>' +
+                    '</div>';
+                return html;
+            }).join('') +
+            '</div>';
+
+        // Listen for click events
+        document.addEventListener('click', clickHandler, false);
     </script>
 </body>
 
