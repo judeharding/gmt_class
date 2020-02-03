@@ -196,11 +196,13 @@
                 // points = points + 1;
                 console.log("POINTS...", points);
                 points++;
-                if (points > 11) {
+                // if (points > 11) {
+                //     renderWon();
+                //     return;
+                // }
+                if (points === (monsters.length - 1))
                     renderWon();
-                    return;
-                }
-                // return;
+                return;
             } else {
                 // alert("You've Lost -- Play Again?");
                 // location.reload();
