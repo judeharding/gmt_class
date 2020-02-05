@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Table of Contents</title>
+    <title>Table of Contents - Missing IDs</title>
 
     <style type="text/css">
         body {
@@ -15,11 +15,11 @@
 
 <body>
 
-    <h1>Table of Contents</h1>
+    <h1>Table of Contents - Missing IDs</h1>
 
     <div id="table-of-contents"></div>
 
-    <h2 id="cat-o-nine-tails">Cat O'Nine Tails</h2>
+    <h2>Cat O'Nine Tails</h2>
 
     <p>Cat o'nine tails Pieces of Eight swab carouser tackle. Pink hornswaggle gabion Sea Legs Davy Jones' Locker.</p>
 
@@ -29,14 +29,14 @@
 
     <p>Dead men tell no tales topmast Sail ho Davy Jones' Locker chantey. Wherry fluke pillage rope's end brig.</p>
 
-    <h4 id="privateer">Privateer</h4>
+    <h4>Privateer</h4>
 
     <p>Tack topgallant draft line flogging. Maroon overhaul grog blossom Privateer main sheet.</p>
 
     <p>Provost me cackle fruit Corsair Cat o'nine tails. Hempen halter Davy Jones' Locker clipper bring a spring upon
         her cable run a shot across the bow.</p>
 
-    <h2 id="ahoy">Ahoy</h2>
+    <h2>Ahoy</h2>
 
     <p>Booty squiffy wench overhaul ahoy. Parrel Pirate Round long clothes long boat come about.</p>
 
@@ -65,7 +65,7 @@
 
     <p>Holystone bring a spring upon her cable grog blossom deadlights league. Lanyard gabion reef sails booty gaff.</p>
 
-    <h4 id="sea-legs">Sea Legs</h4>
+    <h4>Sea Legs</h4>
 
     <p>Sea Legs to go on account skysail Yellow Jack heave down. Spanker heave down yawl starboard barque.</p>
 
@@ -83,7 +83,7 @@
 
     <p>Sutler Davy Jones' Locker ahoy walk the plank lugger. Jolly Roger matey hornswaggle Privateer marooned.</p>
 
-    <h2 id="davy-jones-locker">Davy Jones' Locker</h2>
+    <h2>Davy Jones' Locker</h2>
 
     <p>Davy Jones' Locker jib trysail bowsprit heave down. Transom square-rigged clipper Jack Ketch chandler.</p>
 
@@ -101,11 +101,28 @@
     </footer>
 
     <script>
-        // // Get the table of contents container
+        // Get the table of contents container
         var tableOfContents = document.querySelector('#table-of-contents');
 
         // Get all of the h2 headings in the document
-        var headings = document.querySelectorAll('h2');
+        var headings = document.querySelectorAll('h2, h3, h4, h5, h6');
+        // console.log(headings);
+
+
+        var headsIDs = Array.prototype.slice.call(headings).map(function (heading) {
+            // console.log(heading.id);
+            // console.log("HEADINGS...", heading.id, heading);
+            if (heading.id == "") {
+                console.log("THIS HEADING HAS NO ID...", heading);
+                var newHeadId = heading;
+                console.log("NEW HEAD ID is ", newHeadId.innerText);
+                return heading.id;
+            }
+            return heading.id;
+        }).join('');
+
+
+
 
         // Make sure there's at least one heading
         // Only generate markup if there are heading elements
@@ -123,29 +140,7 @@
                 }).join('') +
                 '</ol>';
         }
-
-        // // Your code goes here...
-        // var head2 = Array.prototype.slice.call(document.querySelectorAll('h2'));
-        // head2.forEach(function (h2, index) {
-        //     console.log(h2.textContent);
-        //     var html = h2.textContent;
-        //     var tableOfContents = document.querySelector('#table-of-contents');
-        //     tableOfContents.innerHTML = '<li>' + html + '</li>';
-        // });
-
-        // // var head2 = Array.prototype.slice.call(document.querySelectorAll('h2'));
-
-        // // var getH2 = function () {
-        // //     return head2.map(function (h2) {
-        // //         var html = h2.textContent;
-        // //         console.log(html);
-
-        // //         return html;
-        // //     }).join();
-        // // };
     </script>
-
-
 </body>
 
 </html>
