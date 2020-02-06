@@ -12,7 +12,72 @@
     <h2>xxx</h2>
 </body>
 <script>
-    // ARRAYS AND OBJECTS
+    sandwich = "tuna";
+    console.log(sandwich);
+
+    var logSand = function () {
+        console.log(sandwich);
+        sandwich = "turkey";
+        console.log(sandwich);
+
+    };
+    logSand();
+    console.log(sandwich);
+
+    ; (function () {
+        console.log("RUNNING!!!");
+
+    })();
+
+    var add = function () {
+        var total = 0;
+        for (var index = 0; index < arguments.length; index++) {
+            total += arguments[index];
+        }
+        return total;
+    };
+    console.log(add(3, 4));
+    console.log(add(3, 4, 5, 6, 7));
+
+
+
+</script>
+
+</html>
+
+<!-- sandbox  -->
+<!-- // Determine MVP to get job done -- less is more
+// 1.  VAR the elements that you will need. 
+// 2.  ADD an event listener triggered by a user action
+// 3.  Magic that needs to get done
+// 4.  Update UI maybe with textContent
+
+// abstract your code -- think dry 
+//     anything that you do multiple times -- don't copy/paste
+//         create a function for the boiler plate stuff
+//             and variables [] for the variations
+//             and a forEach or another loop for the execution
+
+// BAD IDEAto use innerHTML with API calls b/c you are open to a XSS attack
+// ex - this will execute
+// // This WILL run
+// div.innerHTML = '<img src=x onerror="alert(\'XSS Attack\')">';
+// just "sanitize" your html by using textContent instead of innerHTML
+
+// var sanitizeHTML = function (str) {
+//     var temp = document.createElement('div');
+//     temp.textContent = str;
+//     return temp.innerHTML;
+// };
+// along with 
+// Renders <h1>&lt;img src=x onerror="alert('XSS Attack')"&gt;</h1>
+// div.innerHTML = '<h1>' + sanitizeHTML('<img src=x onerror="alert(\'XSS Attack\')">') + '</h1>'; -->
+
+<!-- -------------- -->
+
+<!-- <h2>ARRAYS AND OBJECTS</h2>
+
+<!-- // ARRAYS AND OBJECTS
     var sandwiches = ["turkey", "tuna", "ham", "chix"];
     // get item
     console.log(sandwiches[1]); // tuna
@@ -125,43 +190,9 @@
 
     // create NEW object without overwriting the existing objects 
     var mergedNewObj = Object.assign({}, obj1, obj2, obj3);
-    console.log(mergedNewObj);
+    console.log(mergedNewObj); -->
 
 
-
-</script>
-
-</html>
-
-<!-- sandbox  -->
-<!-- // Determine MVP to get job done -- less is more
-// 1.  VAR the elements that you will need. 
-// 2.  ADD an event listener triggered by a user action
-// 3.  Magic that needs to get done
-// 4.  Update UI maybe with textContent
-
-// abstract your code -- think dry 
-//     anything that you do multiple times -- don't copy/paste
-//         create a function for the boiler plate stuff
-//             and variables [] for the variations
-//             and a forEach or another loop for the execution
-
-// BAD IDEAto use innerHTML with API calls b/c you are open to a XSS attack
-// ex - this will execute
-// // This WILL run
-// div.innerHTML = '<img src=x onerror="alert(\'XSS Attack\')">';
-// just "sanitize" your html by using textContent instead of innerHTML
-
-// var sanitizeHTML = function (str) {
-//     var temp = document.createElement('div');
-//     temp.textContent = str;
-//     return temp.innerHTML;
-// };
-// along with 
-// Renders <h1>&lt;img src=x onerror="alert('XSS Attack')"&gt;</h1>
-// div.innerHTML = '<h1>' + sanitizeHTML('<img src=x onerror="alert(\'XSS Attack\')">') + '</h1>'; -->
-
-<!-- -------------- -->
 
 <!-- <h2>STRINGS AND NUMBERS</h2>
 
