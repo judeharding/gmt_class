@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Weather App</title>
+
+    <style type="text/css">
+        body {
+            margin: 1em auto;
+            max-width: 30em;
+            width: 88%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Weather App</h1>
+
+    <div id="app">Checking the weather near you...</div>
+
+    <script>
+
+        // var cel = (temp - 32) * 5 / 9;
+        // var far = (temp * 9 / 5) + 32;
+        var app = document.querySelector('#app');
+        var apiKey = "75327a8ba4f94d9d82c78f775e1024af";
+        var weather = [];
+
+        var getWeather = function () {
+            // Call the API
+            fetch('https://api.weatherbit.io/v2.0/current?city=Charlotte,NC&key=' + apiKey).then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return Promise.reject(response);
+                }
+            }).then(function (response) {
+
+                // Store the post data to a variable
+                // weather = JSON.stringify(data);
+                var weatherbitweather = response.data[0].weather.description;
+                console.log(weatherbitweather);
+
+                console.log("INSIDE...", weatherbitweather);
+                app.innerText = weatherbitweather;
+                // app.innerHTML = weather;
+
+            });
+            // console.log("OUTSIDE...", weather);
+        };
+
+        getWeather();
+
+    </script>
+</body>
+
+</html>
