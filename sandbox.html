@@ -12,33 +12,6 @@
     <h2>xxx</h2>
 </body>
 <script>
-    sandwich = "tuna";
-    console.log(sandwich);
-
-    var logSand = function () {
-        console.log(sandwich);
-        sandwich = "turkey";
-        console.log(sandwich);
-
-    };
-    logSand();
-    console.log(sandwich);
-
-    ; (function () {
-        console.log("RUNNING!!!");
-
-    })();
-
-    var add = function () {
-        var total = 0;
-        for (var index = 0; index < arguments.length; index++) {
-            total += arguments[index];
-        }
-        return total;
-    };
-    console.log(add(3, 4));
-    console.log(add(3, 4, 5, 6, 7));
-
 
 
 </script>
@@ -74,6 +47,41 @@
 // div.innerHTML = '<h1>' + sanitizeHTML('<img src=x onerror="alert(\'XSS Attack\')">') + '</h1>'; -->
 
 <!-- -------------- -->
+
+
+
+<!-- <h2>SCOPE</h2>
+sandwich = "tuna";
+    console.log(sandwich);
+
+    var logSand = function () {
+        console.log(sandwich);
+        sandwich = "turkey";
+        console.log(sandwich);
+
+    };
+    logSand();
+    console.log(sandwich);
+
+    ; (function () {
+        console.log("RUNNING!!!");
+
+    })();
+
+    var add = function () {
+        var total = 0;
+        for (var index = 0; index < arguments.length; index++) {
+            total += arguments[index];
+        }
+        return total;
+    };
+    console.log(add(3, 4));
+    console.log(add(3, 4, 5, 6, 7));
+
+
+
+
+
 
 <!-- <h2>ARRAYS AND OBJECTS</h2>
 
