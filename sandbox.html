@@ -60,12 +60,15 @@
 
 // var sanitizeHTML = function (str) {
 //     var temp = document.createElement('div');
+//     the .textContent strips out any harmful markup code
 //     temp.textContent = str;
 //     return temp.innerHTML;
 // };
 // along with 
 // Renders <h1>&lt;img src=x onerror="alert('XSS Attack')"&gt;</h1>
 // div.innerHTML = '<h1>' + sanitizeHTML('<img src=x onerror="alert(\'XSS Attack\')">') + '</h1>'; -->
+
+
 
 <!-- -------------- -->
 
