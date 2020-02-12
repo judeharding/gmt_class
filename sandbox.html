@@ -12,6 +12,27 @@
     <h2>xxx</h2>
 </body>
 <script>
+    var lunch = {
+        sand: "turkey",
+        chips: "kettle",
+        drink: "coke"
+    };
+
+    var moreLunch = lunch;
+
+    var evenmorelunch = Object.assign({}, moreLunch);
+
+    console.log(lunch);
+
+    delete moreLunch.drink;
+
+    console.log(lunch);
+    console.log(moreLunch);
+    console.log(evenmorelunch);
+
+
+
+
 
 
 </script>

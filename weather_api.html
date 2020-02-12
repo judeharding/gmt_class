@@ -20,62 +20,55 @@
     <div id="app">Checking the weather near you... xxx</div>
 
     <script>
-        fetch('https://ipapi.co/json')
-            .then(function (response) {
-                return response.json()
-            })
-            .then(function (json) {
-                console.log(json)
-            })
 
-        // var apiKey = '75327a8ba4f94d9d82c78f775e1024af';
-        // var app = document.querySelector('#app');
+        var apiKey = '75327a8ba4f94d9d82c78f775e1024af';
+        var app = document.querySelector('#app');
 
-        // var sanitizeHTML = function (str) {
-        //     var temp = document.createElement('div');
-        //     temp.textContent = str;
-        //     return temp.innerHTML;
-        // };
+        var sanitizeHTML = function (str) {
+            var temp = document.createElement('div');
+            temp.textContent = str;
+            return temp.innerHTML;
+        };
 
-        // var fToC = function (temp) {
-        //     return (parseFloat(temp) * 9 / 5) + 32;
-        // };
+        var fToC = function (temp) {
+            return (parseFloat(temp) * 9 / 5) + 32;
+        };
 
-        // var renderWeather = function (weather) {
-        //     app.innerHTML =
-        //         '<p>' +
-        //         '<img src="https://www.weatherbit.io/static/img/icons/' + sanitizeHTML(weather.weather.icon) + '.png">' +
-        //         '</p>' +
-        //         '<p>It is currently ' + fToC(sanitizeHTML(weather.temp)) + ' degrees and ' + sanitizeHTML(weather.weather.description).toLowerCase() + ' in ' + sanitizeHTML(weather.city_name) + ', ' + sanitizeHTML(weather.state_code) + '.</p>';
-        // };
+        var renderWeather = function (weather) {
+            app.innerHTML =
+                '<p>' +
+                '<img src="https://www.weatherbit.io/static/img/icons/' + sanitizeHTML(weather.weather.icon) + '.png">' +
+                '</p>' +
+                '<p>It is currently ' + fToC(sanitizeHTML(weather.temp)) + ' degrees and ' + sanitizeHTML(weather.weather.description).toLowerCase() + ' in ' + sanitizeHTML(weather.city_name) + ', ' + sanitizeHTML(weather.state_code) + '.</p>';
+        };
 
 
-        // fetch('https://ipapi.co/json').then(function (response) {
-        //     console.log(response);
+        fetch('https://ipapi.co/json').then(function (response) {
+            console.log(response);
 
-        //     if (response.ok) {
-        //         return response.json();
-        //     } else {
-        //         return Promise.reject(response);
-        //     }
-        // }).then(function (data) {
-        //     // Pass data into another API request
-        //     // Then, return the new Promise into the stream
-        //     return fetch('https://api.weatherbit.io/v2.0/current?key=' + apiKey + '&lat=' + data.latitude + '&lon=' + data.longitude);
-        // }).then(function (response) {
-        //     if (response.ok) {
-        //         return response.json();
-        //     } else {
-        //         return Promise.reject(response);
-        //     }
-        // }).then(function (data) {
-        //     // Pass the first weather item into a helper function to render the UI
-        //     renderWeather(data.data[0]);
-        // }).catch(function (error) {
-        //     // Show an error message
-        //     app.textContent = 'Unable to get weather data at this time.';
-        //     console.warn(error);
-        // });
+            if (response.ok) {
+                return response.json();
+            } else {
+                return Promise.reject(response);
+            }
+        }).then(function (data) {
+            // Pass data into another API request
+            // Then, return the new Promise into the stream
+            return fetch('https://api.weatherbit.io/v2.0/current?key=' + apiKey + '&lat=' + data.latitude + '&lon=' + data.longitude);
+        }).then(function (response) {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return Promise.reject(response);
+            }
+        }).then(function (data) {
+            // Pass the first weather item into a helper function to render the UI
+            renderWeather(data.data[0]);
+        }).catch(function (error) {
+            // Show an error message
+            app.textContent = 'Unable to get weather data at this time.';
+            console.warn(error);
+        });
 
 
         // -----
