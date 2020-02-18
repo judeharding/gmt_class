@@ -40,6 +40,32 @@
 </html>
 
 <!-- sandbox  -->
+
+
+<!-- Revealing Module Pattern 
+// REVEALING MODULE PATTERN
+//create iife assigned to a variable and must contain an object to hold the PUBLIC methods
+var x = (function () {
+    // private variables
+    var wizards = ['Harry Potter', 'Hermione', 'Neville', 'Ron'];
+
+    var publicMethods = {};
+
+    // private copy
+    var pvtCopy = function (arr) {
+        return arr.slice();
+    }
+    publicMethods.getCopyOfPvtCopy = function () {
+        return pvtCopy(wizards);
+    }
+
+    return publicMethods;
+
+})();
+
+// so when you call x, it has an object with the public methods assigned to it 
+// x(); -->
+
 <!-- // Determine MVP to get job done -- less is more
 // 1.  VAR the elements that you will need. 
 // 2.  ADD an event listener triggered by a user action

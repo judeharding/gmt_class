@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Helper Library</title>
+
+    <style type="text/css">
+        body {
+            margin: 1em auto;
+            max-width: 40em;
+            width: 88%;
+        }
+
+        .btn-blue {
+            background-color: #0088cc;
+            color: #ffffff;
+        }
+
+        .btn-purple {
+            background-color: rebeccapurple;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Helper Library</h1>
+
+    <p>All of the fun here happens in the console.</p>
+
+    <p>
+        <button class="btn-blue" id="button-1">Button 1</button>
+        <button class="btn-blue" id="button-2">Button 2</button>
+        <button class="btn-blue" id="button-3">Button 3</button>
+    </p>
+
+    <script>
+        //iffe
+        var _ = (function () {
+            // Variables
+
+            var methods = {};
+
+            // Methods
+            /**
+             * Convert an array-like object into an array
+             * @param  {*}     list An array-like object (ex. NodeList)
+             * @return {Array}      An array
+             */
+            methods.toArray = function (list) {
+                return Array.prototype.slice.call(list);
+            };
+
+            /**
+             * Get the first element that match a selector
+             * @param  {String} selector The selector
+             * @return {Node}            The matching element
+             */
+            methods.get = function (selector) {
+                return document.querySelector(selector);
+            };
+
+            /**
+             * Get all elements that match a selector
+             * @param  {String} selector The selector
+             * @return {Array}           The matching elements
+             */
+            methods.getAll = function (selector) {
+                //converts the node list into an array
+                return methods.toArray(document.querySelectorAll(selector));
+            };
+
+            /**
+             * Add a class to all elements in an array
+             * @param {Array}  elems     The elements
+             * @param {String} className The class to add
+             */
+            methods.addClass = function (elems, className) {
+                elems.forEach(function (elem) {
+                    elem.classList.add(className);
+                });
+            };
+
+            /**
+             * Remove a class to all elements in an array
+             * @param {Array}  elems     The elements
+             * @param {String} className The class to remove
+             */
+            methods.removeClass = function (elems, className) {
+                elems.forEach(function (elem) {
+                    elem.classList.remove(className);
+                });
+            };
+
+            // Return the public methods
+            return methods;
+
+        })();
+
+        // _.toArray()
+        var arr = _.toArray(document.querySelectorAll('button'));
+        console.log('_.toArray()', arr);
+
+        // _.get()
+        var btn = _.get('#button-2');
+        console.log('_.get()', btn);
+
+        // _.getAll()
+        var btns = _.getAll('button');
+        console.log('_.getAll()', btns);
+
+        // _.addClass()
+        _.addClass(btns, 'btn-purple');
+
+        // _.removeClass()
+        _.removeClass(btns, 'btn-blue');
+
+
+        // MINE (sort of works )
+        // // REVEALING MODULE PATTERN
+        // // create iife assigned to a variable and must contain an object to hold the PUBLIC methods
+        // var x = (function () {
+        //     // private variables
+        //     var btns = document.getElementsByTagName("button");
+        //     console.log("LOGGING BUTTONS", btns);
+        //     var arrNode = Array.prototype.slice.call(document.querySelectorAll("button"));
+        //     console.log("ARRAY NODES...", arrNode);
+
+
+        //     var first = arrNode[0];
+        //     console.log("FIRST ...  ", first);
+
+
+        //     var allBtns = document.querySelectorAll("button");
+        //     console.log("ALL BUTTONS...", allBtns);
+        //     var btnsArray = Array.prototype.slice.call(document.querySelectorAll("button"));
+        //     console.log("BUTTONS ARRAY ...", btnsArray);
+        //     var len = btnsArray.length;
+        //     for (let index = 0; index < len; index++) {
+        //         btnsArray.className = "btn-purple";
+        //         console.log("ADDING CLASS  NAME...", btnsArray.className);
+        //     }
+
+        //     for (let index = 0; index < len; index++) {
+        //         btnsArray.classList.remove("btn-blue");
+        //         console.log("REMOVING CLASS NAME btn-blue...", btnsArray);
+        //     }
+
+
+
+
+
+
+
+        //     var publicMethods = {};
+
+        //     // // private copy
+        //     // var pvtCopy = function (arr) {
+        //     //     return arr.slice();
+        //     // }
+        //     // publicMethods.getCopyOfPvtCopy = function () {
+        //     //     return pvtCopy(wizards);
+        //     // }
+
+        //     return publicMethods;
+
+        // })();
+
+// so when you call x, it has an object with the public methods assigned to it 
+// x();
+    </script>
+</body>
+
+</html>
