@@ -37,7 +37,7 @@
 
     <script>
         //iffe
-        var _ = (function () {
+        var x = (function () {
             // Variables
 
             var methods = {};
@@ -98,23 +98,23 @@
 
         })();
 
-        // _.toArray()
-        var arr = _.toArray(document.querySelectorAll('button'));
-        console.log('_.toArray()', arr);
+        // x.toArray()
+        var arr = x.toArray(document.querySelectorAll('button'));
+        console.log('x.toArray()', arr);
 
-        // _.get()
-        var btn = _.get('#button-2');
-        console.log('_.get()', btn);
+        // x.get()
+        var btn = x.get('#button-2');
+        console.log('x.get()', btn);
 
-        // _.getAll()
-        var btns = _.getAll('button');
-        console.log('_.getAll()', btns);
+        // x.getAll()
+        var btns = x.getAll('button');
+        console.log('x.getAll()', btns);
 
-        // _.addClass()
-        _.addClass(btns, 'btn-purple');
+        // x.addClass()
+        x.addClass(btns, 'btn-purple');
 
-        // _.removeClass()
-        _.removeClass(btns, 'btn-blue');
+        // x.removeClass()
+        x.removeClass(btns, 'btn-blue');
 
 
         // MINE (sort of works )

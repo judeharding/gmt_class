@@ -42,6 +42,51 @@
 <!-- sandbox  -->
 
 
+
+<!-- // using capitals because i am returning a constructor
+var DA = (function () {
+
+
+    //private function only available in the iffe
+    var copy = function (arr) {
+        return arr.slice();
+    }
+    
+    // creating a constructor as noted by the cap C 
+    // this will return an INSTANCE 
+    var Constructor = function (arg1, arg2) {
+
+        // store the unique properties
+        this.arg1 = arg1;
+        this.arg2 = arg2;
+    };
+
+    return Constructor;
+
+})();
+
+var x1 = new DA([
+    'Harry Potter',
+    'Hermione'
+], {
+    expel: "expelliarumus",
+    fetch: 'Accio',
+    float: 'Wingardium Leviosa'
+}
+);  // creates a new instance
+var x2 = new DA([
+    'Neville',
+    'Ron'
+], {
+    stun: 'Stupefy',
+    patronus: 'Expect, Patronum!'
+}
+);  e -->
+
+
+
+
+
 <!-- Revealing Module Pattern 
 // REVEALING MODULE PATTERN
 //create iife assigned to a variable and must contain an object to hold the PUBLIC methods

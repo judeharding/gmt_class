@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DOM Manipulation Library</title>
+
+    <style type="text/css">
+        body {
+            margin: 1em auto;
+            max-width: 40em;
+            width: 88%;
+        }
+
+
+        .btn-blue {
+            background-color: #0088cc;
+            color: #ffffff;
+        }
+
+        .btn-purple {
+            background-color: rebeccapurple;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>DOM Manipulation Library</h1>
+
+    <p>All of the fun here happens in the console.</p>
+
+    <p>
+        <button class="btn-blue" id="button-1">Button 1</button>
+        <button class="btn-blue" id="button-2">Button 2</button>
+        <button class="btn-blue" id="button-3">Button 3</button>
+    </p>
+
+    <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+    </ul>
+
+    <script>
+
+        // like Jquery
+        // IIFE
+        var $ = (function () {
+
+            /**
+             * Create the constructor
+             * @param {String} selector The selector to use
+             */
+            var Constructor = function (selectorPassedIn) {
+                this.elements = document.querySelectorAll(selectorPassedIn);
+                // might return a node list
+            };
+
+            /**
+             * Get an immutable copy of the matching elements
+             * @return {Array} The elements
+             */
+            Constructor.prototype.items = function () {
+                return Array.prototype.slice.call(this.elements);
+                // converts the node list above on 56 into an array
+            };
+
+            /**
+             * Get the first item in a set of elements
+             * @return {*} The first item
+             */
+            Constructor.prototype.first = function () {
+                return this.elements[0];
+                // works with the array returned on 65
+            };
+
+            /**
+             * Get the last item in a set of elements
+             * @return {*} The last item
+             */
+            Constructor.prototype.last = function () {
+                return this.elements[this.elements.length - 1];
+                // length-1 returns the ZERO based arrays' last item's index
+                // works with the array returned on 65
+            };
+
+            /**
+             * Add a class to every item in a set of elements
+             * @param {String} className The class to add
+             */
+            Constructor.prototype.addClass = function (className) {
+                // the this.items() function below gets back an array from the node list
+                // then call the forEach method on the array to loop
+                this.items().forEach(function (elem) {
+                    elem.classList.add(className);
+                });
+            };
+
+            /**
+             * Remove a class to every item in a set of elements
+             * @param {String} className The class to remove
+             */
+            Constructor.prototype.removeClass = function (className) {
+                // the this.items() function below gets back an array from the node list
+                // then call the forEach method on the array to loop
+                this.items().forEach(function (elem) {
+                    elem.classList.remove(className);
+                });
+            };
+
+            // Return the constructor object
+            // END OF IIFE
+            return Constructor;
+
+        })();
+
+
+        // Create new instances
+        var btns = new $('button');
+        var list = new $('ul');
+
+        // $.items()
+        console.log('$.items()', btns.items());
+        console.log('$.items()', list.items());
+
+        // $.first()
+        console.log('$.first()', btns.first());
+
+        // $.last()
+        console.log('$.last()', btns.last());
+
+        // $.addClass()
+        btns.addClass('btn-purple');
+
+        // $.removeClass()
+        btns.removeClass('btn-blue');
+
+
+        // // using capitals because i am returning a constructor
+        // var DA = (function () {
+
+
+        //     //private function only available in the iffe
+        //     var copy = function (arr) {
+        //         return arr.slice();
+        //     }
+
+        //     // creating a constructor as noted by the cap C 
+        //     // this will return an INSTANCE 
+        //     var Constructor = function (arg1, arg2) {
+
+        //         // store the unique properties
+        //         this.arg1 = arg1;
+        //         this.arg2 = arg2;
+        //     };
+
+        //     return Constructor;
+
+        // })();
+        // var x1 = new DA('li');  // creates a new instance
+        // var x2 = new DA(.btn-blue);  // creates another new instance
+
+
+
+
+
+    </script>
+</body>
+
+</html>
