@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Form Autosave</title>
+
+    <style type="text/css">
+        body {
+            margin: 1em auto;
+            max-width: 40em;
+            width: 88%;
+        }
+
+        label,
+        input,
+        textarea {
+            display: block;
+            width: 100%;
+        }
+
+        input,
+        textarea {
+            margin-bottom: 1em;
+        }
+
+        textarea {
+            height: 8em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Form Autosave</h1>
+
+    <form class="save-me" id="save-me">
+
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name">
+
+        <label for="address">Address</label>
+        <input type="text" name="address" id="address">
+
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+
+        <label for="more">Additional thoughts?</label>
+        <textarea name="more" id="more"></textarea>
+
+        <p>
+            <button type="submit">Submit</button>
+        </p>
+
+    </form>
+
+    <script>
+
+
+
+        var btnSubmit = function (event) {
+            event.preventDefault();
+
+            var name = document.getElementById("name").value;
+            console.log(name);
+            localStorage.setItem("nameKey", name);
+            var getName = localStorage.getItem("nameKey");
+            console.log(getName);
+
+            var address = document.getElementById("address").value;
+            console.log(address);
+            localStorage.setItem("addressKey", address);
+            var getAddress = localStorage.getItem("addressKey");
+            console.log(getAddress);
+
+            var email = document.getElementById("email").value;
+            console.log(email);
+            localStorage.setItem("emailKey", email);
+            var getEmail = localStorage.getItem("emailKey");
+            console.log(getEmail);
+
+            var more = document.getElementById("more").value;
+            console.log(more);
+            localStorage.setItem("moreKey", more);
+            var getMore = localStorage.getItem("moreKey");
+            console.log(getMore);
+
+            // document.getElementById("save-me").reset();
+
+            // setTimeout(function () { document.getElementById("save-me").reset(); }, 3000);
+        };
+
+
+
+
+
+        // Listen for click events
+        document.addEventListener('click', btnSubmit);
+
+
+    </script>
+</body>
+
+</html>
