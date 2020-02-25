@@ -48,23 +48,18 @@
         <textarea name="more" id="more"></textarea>
 
         <p>
-            <button type="submit">Submit</button>
+            <button type="submit">Reset</button>
         </p>
 
     </form>
 
     <script>
 
-        //
         // Variables
-        //
-
         var storagePrefix = 'form-autosave_';
-
 
         //
         // Methods
-        //
 
 		/**
 		 * Get an ID for a field
@@ -82,7 +77,6 @@
             }
 
             return null;
-
         };
 
 		/**
@@ -106,9 +100,7 @@
 
                 // Set the field value to the saved data in localStorage
                 field.value = saved;
-
             });
-
         };
 
 		/**
@@ -128,9 +120,7 @@
 
                 // Remove the item from localStorage
                 localStorage.removeItem(storagePrefix + id);
-
             });
-
         };
 
 		/**
