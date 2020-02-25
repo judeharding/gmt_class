@@ -55,46 +55,169 @@
 
     <script>
 
+        //
+        // Variables
+        //
+
+        var storagePrefix = 'form-autosave_';
 
 
-        var btnSubmit = function (event) {
-            event.preventDefault();
+        //
+        // Methods
+        //
 
-            var name = document.getElementById("name").value;
-            console.log(name);
-            localStorage.setItem("nameKey", name);
-            var getName = localStorage.getItem("nameKey");
-            console.log(getName);
+		/**
+		 * Get an ID for a field
+		 * @param  {Node}   field The field
+		 * @return {String}       The ID
+		 */
+        var getID = function (field) {
 
-            var address = document.getElementById("address").value;
-            console.log(address);
-            localStorage.setItem("addressKey", address);
-            var getAddress = localStorage.getItem("addressKey");
-            console.log(getAddress);
+            if (field.id.length > 0) {
+                return field.id;
+            }
 
-            var email = document.getElementById("email").value;
-            console.log(email);
-            localStorage.setItem("emailKey", email);
-            var getEmail = localStorage.getItem("emailKey");
-            console.log(getEmail);
+            if (field.name.length > 0) {
+                return field.name;
+            }
 
-            var more = document.getElementById("more").value;
-            console.log(more);
-            localStorage.setItem("moreKey", more);
-            var getMore = localStorage.getItem("moreKey");
-            console.log(getMore);
+            return null;
 
-            // document.getElementById("save-me").reset();
+        };
 
-            // setTimeout(function () { document.getElementById("save-me").reset(); }, 3000);
+		/**
+		 * Load saved form data from localStorage
+		 */
+        var loadData = function () {
+
+            // Get all of the form fields
+            var fields = document.querySelectorAll('#save-me input, #save-me textarea');
+
+            // Loop through each field and load any saved data in localStorage
+            Array.prototype.slice.call(fields).forEach(function (field) {
+
+                // If the field has no usable ID, skip it
+                var id = getID(field);
+                if (!id) return;
+
+                // If there's no saved value in localStorage, skip it
+                var saved = localStorage.getItem(storagePrefix + id);
+                if (!saved) return;
+
+                // Set the field value to the saved data in localStorage
+                field.value = saved;
+
+            });
+
+        };
+
+		/**
+		 * Delete saved data from localStorage
+		 */
+        var clearData = function () {
+
+            // Get all of the form fields
+            var fields = document.querySelectorAll('#save-me input, #save-me textarea');
+
+            // Loop through each field and load any saved data in localStorage
+            Array.prototype.slice.call(fields).forEach(function (field) {
+
+                // If the field has no usable ID, skip it
+                var id = getID(field);
+                if (!id) return;
+
+                // Remove the item from localStorage
+                localStorage.removeItem(storagePrefix + id);
+
+            });
+
+        };
+
+		/**
+		 * Handle input events
+		 * @param  {Event} event The event object
+		 */
+        var inputHandler = function (event) {
+
+            // Only run for fields in the #save-me form
+            if (!event.target.closest('#save-me')) return;
+
+            // Get an ID for the field
+            var id = getID(event.target);
+            if (!id) return;
+
+            // Save the field to localStorage
+            localStorage.setItem(storagePrefix + id, event.target.value);
+
+        };
+
+		/**
+		 * Handle submit events
+		 * @param  {Event} event The event object
+		 */
+        var submitHandler = function (event) {
+
+            // Only run for the #save-me form
+            if (event.target.id !== 'save-me') return;
+
+            // Clear saved data
+            clearData();
+
         };
 
 
+        //
+        // Inits & Event Listeners
+        //
+
+        // Load saved data from storage
+        loadData();
+
+        // Listen for input events
+        document.addEventListener('input', inputHandler, false);
+
+        // Listen for submit events
+        document.addEventListener('submit', submitHandler, false);
+
+        // MY ANSWER - different
+        // var btnSubmit = function (event) {
+        //     event.preventDefault();
+
+        //     var name = document.getElementById("name").value;
+        //     console.log(name);
+        //     localStorage.setItem("nameKey", name);
+        //     var getName = localStorage.getItem("nameKey");
+        //     console.log(getName);
+
+        //     var address = document.getElementById("address").value;
+        //     console.log(address);
+        //     localStorage.setItem("addressKey", address);
+        //     var getAddress = localStorage.getItem("addressKey");
+        //     console.log(getAddress);
+
+        //     var email = document.getElementById("email").value;
+        //     console.log(email);
+        //     localStorage.setItem("emailKey", email);
+        //     var getEmail = localStorage.getItem("emailKey");
+        //     console.log(getEmail);
+
+        //     var more = document.getElementById("more").value;
+        //     console.log(more);
+        //     localStorage.setItem("moreKey", more);
+        //     var getMore = localStorage.getItem("moreKey");
+        //     console.log(getMore);
+
+        //     // document.getElementById("save-me").reset();
+
+        //     // setTimeout(function () { document.getElementById("save-me").reset(); }, 3000);
+        // };
 
 
 
-        // Listen for click events
-        document.addEventListener('click', btnSubmit);
+
+
+        // // Listen for click events
+        // document.addEventListener('click', btnSubmit);
 
 
     </script>
