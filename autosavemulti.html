@@ -109,11 +109,11 @@
         // Methods
         //
 
-		/**
-		 * Get an ID for a field
-		 * @param  {Node}   field The field
-		 * @return {String}       The ID
-		 */
+        /**
+         * Get an ID for a field
+         * @param  {Node}   field The field
+         * @return {String}       The ID
+         */
         var getID = function (field) {
 
             if (field.id.length > 0) {
@@ -128,20 +128,23 @@
 
         };
 
-		/**
-		 * Load saved form data from localStorage
-		 */
+        /**
+         * Load saved form data from localStorage
+         */
         var loadData = function () {
 
             // Get localStorage data
             var saved = localStorage.getItem(storageID);
-
             if (!saved) return;
             saved = JSON.parse(saved);
 
             // Get all of the form fields
-            var fields = document.querySelectorAll('#save-me input, #save-me textarea, #save-me select, #save-me radio, #save-me checkbox');
-            console.log(fields);
+            //ANSWER - https://courses.gomakethings.com/academy/2020-01/project-review-autosave-other-field-types/
+
+            // var fields = document.querySelectorAll('#save-me input, #save-me textarea, #save-me select, #save-me radio, #save-me
+            // checkbox'); // my answer tried to add radio and checkbox
+            // radio buttons and check boxes are a type of INPUT so they are already covered.
+            var fields = document.querySelectorAll('#save-me input, #save-me textarea, #save-me select');
 
             // Loop through each field and load any saved data in localStorage
             Array.prototype.slice.call(fields).forEach(function (field) {
@@ -154,16 +157,27 @@
                 if (!saved[id]) return;
 
                 // Set the field value to the saved data in localStorage
-                field.value = saved[id];
+                // If it's a checkbox, set it's checked state
+                // If it's a radio button and its value matches, set its checked state
+                // Otherwise, set the value
+                if (field.type === 'checkbox') {
+                    field.checked = saved[id] === 'on' ? true : false;
+                } else if (field.type === 'radio') {
+                    // if you do not check for the field.VALUE, the last option in 
+                    // the radio list will become checked automatically
+                    field.checked = saved[id] === field.value ? true : false;
+                } else {
+                    field.value = saved[id];
+                }
 
             });
 
         };
 
-		/**
-		 * Handle input events
-		 * @param  {Event} event The event object
-		 */
+        /**
+         * Handle input events
+         * @param  {Event} event The event object
+         */
         var inputHandler = function (event) {
 
             // Only run for fields in the #save-me form
@@ -171,26 +185,30 @@
 
             // Get an ID for the field
             var id = getID(event.target);
-            // console.log(id);
             if (!id) return;
 
             // Get existing data from localStorage
             var saved = localStorage.getItem(storageID);
-            // console.log(saved);
             saved = saved ? JSON.parse(saved) : {};
 
             // Add the field to the localStorage object
-            saved[id] = event.target.value;
+            // If it's a checkbox, use on/off values
+            // Otherwise, save the value
+            if (event.target.type === 'checkbox') {
+                saved[id] = event.target.checked ? 'on' : 'off';
+            } else {
+                saved[id] = event.target.value;
+            }
 
             // Save the object back to localStorage
             localStorage.setItem(storageID, JSON.stringify(saved));
 
         };
 
-		/**
-		 * Handle submit events
-		 * @param  {Event} event The event object
-		 */
+        /**
+         * Handle submit events
+         * @param  {Event} event The event object
+         */
         var submitHandler = function (event) {
 
             // Only run for the #save-me form
@@ -214,6 +232,7 @@
 
         // Listen for submit events
         document.addEventListener('submit', submitHandler, false);
+
     </script>
 </body>
 
