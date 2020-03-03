@@ -33,7 +33,7 @@
         var app = document.querySelector('#app');
 
         // Define a localStorage ID
-        var storageID = 'pirateCache';
+        var varStorageID = 'pirateCache';
 
 
         //
@@ -45,9 +45,9 @@
 		 * @param  {String} str  The user-submitted string
 		 * @return {String} str  The sanitized string
 		 */
-        var sanitizeHTML = function (str) {
+        var sanitizeHTML = function (strFromJSONAPI) {
             var temp = document.createElement('div');
-            temp.textContent = str;
+            temp.textContent = strFromJSONAPI;
             return temp.innerHTML;
         };
 
@@ -55,6 +55,8 @@
 		 * Render a message into the UI when there are no articles to share
 		 */
         var renderNoArticles = function () {
+            console.log("ERROR FROM THE API (even though there may be data in the local storage)...");
+
             app.innerHTML = '<p>There be no pirate news afoot, matey. Check back later.</p>';
         };
 
@@ -62,16 +64,17 @@
 		 * Render articles into the UI
 		 * @param  {Object} data The API response object
 		 */
-        var renderNews = function (data) {
+        var renderNews = function (dataFromFetch) {
+            console.log("logging from renderNews");
 
             // If there are no articles, render a message into the UI
-            if (data.articles.length < 1) {
+            if (dataFromFetch.articles.length < 1) {
                 renderNoArticles();
                 return;
             }
 
             // Otherwise, render the UI
-            app.innerHTML = data.articles.map(function (article) {
+            app.innerHTML = dataFromFetch.articles.map(function (article) {
                 var html =
                     '<article>' +
                     '<h2>' + sanitizeHTML(article.title) + '</h2>' +
@@ -79,7 +82,7 @@
                     sanitizeHTML(article.article) +
                     '</article>';
                 return html;
-            }).join('') + '<p><em>Articles from <a href="' + sanitizeHTML(data.attribution.url) + '">' + sanitizeHTML(data.attribution.name) + '</a></em></p>';
+            }).join('') + '<p><em>Articles from <a href="' + sanitizeHTML(dataFromFetch.attribution.url) + '">' + sanitizeHTML(dataFromFetch.attribution.name) + '</a></em></p>';
 
         };
 
@@ -89,32 +92,38 @@
 		 * @param  {Number}  goodFor How long the data is good for
 		 * @return {Boolean}         If true, data has not yet expired
 		 */
-        var isDataValid = function (saved, goodFor) {
+        var isDataValid = function (savedFromLocal, timeGoodForPassedInFromGetDataFunc) {
 
             // Check that there's data, and a timestamp key
-            if (!saved || !saved.data || !saved.timestamp) return false;
+            if (!savedFromLocal || !savedFromLocal.data || !savedFromLocal.timestamp) return false;
 
             // Get the difference between the timestamp and current time
-            var difference = new Date().getTime() - saved.timestamp;
+            var difference = new Date().getTime() - savedFromLocal.timestamp;
+            console.log("the time difference is...", difference);
 
-            return difference < goodFor;
-
+            return difference < timeGoodForPassedInFromGetDataFunc;
         };
+
 
 		/**
 		 * Save article data to localStorage
 		 * @param  {Object} data The article data
 		 */
-        var saveData = function (data) {
+        var saveData = function (dataFromFetch) {
+            console.log("logging from savedData");
+
 
             // Create a cache object with a timestamp
             var cache = {
-                data: data,
+                data: dataFromFetch,
                 timestamp: new Date().getTime()
             };
+            console.log(Object.values(cache));
+
 
             // Stringify it and save it to localStorage
-            localStorage.setItem(storageID, JSON.stringify(cache));
+            localStorage.setItem(varStorageID, JSON.stringify(cache));
+            console.log("data should NOW be in localStorage");
 
         };
 
@@ -124,14 +133,16 @@
         var getData = function () {
 
             // Get saved data from localStorage
-            var saved = localStorage.getItem(storageID);
-            if (!saved) return;
-            saved = JSON.parse(saved);
+            var savedFromLocal = localStorage.getItem(varStorageID);
+            console.log("logging from the data saved in localstorage", savedFromLocal);
+
+            if (!savedFromLocal) return;
+            savedFromLocal = JSON.parse(savedFromLocal);
 
             // If data is has not expired, return it
-            // Use cached data from 30 seconds
-            if (isDataValid(saved, 1000 * 30)) {
-                return saved.data;
+            // Use cached data from 10 seconds
+            if (isDataValid(savedFromLocal, 1000 * 10)) {
+                return savedFromLocal.data;
             }
 
         };
@@ -143,24 +154,29 @@
 
             // Check for valid cached data
             // If it exists, use it
-            var saved = getData();
-            if (saved) {
-                renderNews(saved);
-                console.log('Loaded from cache');
+            var savedInLocalStorage = getData();
+            if (savedInLocalStorage) {
+                renderNews(savedInLocalStorage);
+                console.log('Loaded from cached in LOCAL STORAGE');
                 return;
             }
 
             // Otherwise, fetch articles from the API
             fetch('https://vanillajsacademy.com/api/pirates.json').then(function (response) {
                 if (response.ok) {
+                    console.log("logging from an ok fetchArticles");
+
                     return response.json();
                 } else {
                     return Promise.reject(response);
                 }
-            }).then(function (data) {
-                // savedData is going to keep a cache of data in local storage for 30 seconds
-                saveData(data);
-                console.log('Fetched from API');
+            }).then(function (dataFromFetch) {
+                console.log("logging from the first THEN in fetchArticles");
+
+                // savedData is going to keep a cache of data in local storage for 10 seconds
+                renderNews(dataFromFetch);
+                saveData(dataFromFetch);
+                console.log('Fetched from API in the fetchArticles after the first THEN and after renderNews() and saveData()');
             }).catch(function () {
                 renderNoArticles();
             });
