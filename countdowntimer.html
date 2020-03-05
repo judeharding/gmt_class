@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Timer</title>
+
+    <style type="text/css">
+        body {
+            margin: 1em auto;
+            max-width: 40em;
+            text-align: center;
+            width: 88%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Timer</h1>
+
+    <div id="app"></div>
+
+    <script>
+        // Your code goes here...
+
+        var app = document.querySelector("#app");
+
+        // The count
+        var count = 60;
+
+        // Run a function every 1,000ms (1s)
+        var countDown = window.setInterval(function () {
+
+            // Log the count value to the console
+            console.log(count);
+
+            // Increase count by 1
+            count--;
+
+            // If the value of count is greater than 5, clear the interval
+            if (count < 0) {
+                window.clearInterval(countDown);
+                console.log('/end');
+            }
+
+        }, 1000);
+
+
+        // var startingNumber = 60;
+
+        // console.log("Count down from... ", startingNumber);
+
+        // var countDown = window.setInterval(function (startingNumber) {
+        //     //decrease countDown by 1
+        //     startingNumber--;
+
+        //     if (countDown = 0) {
+        //         console.log("THE END");
+        //         window.clearInterval(countDown);
+        //     }
+        // }, 1000);
+
+    </script>
+</body>
+
+</html>
