@@ -21,46 +21,153 @@
     <div id="app"></div>
 
     <script>
-        // Your code goes here...
+        // https://courses.gomakethings.com/academy/2020-01/project-review-countdown-timer/
+        //
+        // Variables
+        //
 
-        var app = document.querySelector("#app");
+        // Get the #app element from the DOM
+        var app = document.querySelector('#app');
 
-        // The count
-        var count = 60;
+        // Store duration to a variable
+        var duration = 60;
 
-        console.log("Counting down from... ");
+        // The state/data object
+        var data = {
+            timer: duration,
+            done: false
+        };
 
-        // Run a function every 1,000ms (1s)
-        var countDown = window.setInterval(function () {
+        // A placeholder for the countdown interval
+        var countdown;
 
-            // Log the count value to the console
-            console.log(count);
 
-            // Increase count by 1
-            count--;
+        //
+        // Methods
+        //
 
-            // If the value of count is less than 0, clear the interval
-            if (count < 0) {
-                window.clearInterval(countDown);
-                console.log('/end');
+        /**
+         * Get the template markup
+         * @return {String} The HTML string
+         */
+        var template = function () {
+
+            // If the timer is done, show a different UI
+            if (data.done) {
+                return '⏰ <p><button data-restart-timer>Restart Timer</button></p>';
             }
 
-        }, 1000);
+            return data.timer;
+
+        };
+
+        /**
+         * Render the template into the DOM
+         */
+        var render = function () {
+
+            // If there are no updates to the UI, do nothing
+            if (app.innerHTML === template()) return;
+
+            // Update the UI
+            app.innerHTML = template();
+
+        };
+
+        /**
+         * Start the timer
+         */
+        var startTimer = function () {
+
+            // Reset the data
+            data.timer = duration;
+            data.done = false;
+
+            // Run an initial render
+            render();
+
+            // Update the timer every second
+            countdown = window.setInterval(function () {
+
+                // Get the new timer value
+                var time = data.timer - 1;
+
+                // If the timer hits 0, set as done
+                var done = time === 0 ? true : false;
+
+                // Update data and render new UI
+                data.timer = time;
+                data.done = done;
+
+                // Render new UI
+                render();
+
+                // If the timer is done, stop it from running
+                if (done) {
+                    window.clearInterval(countdown);
+                }
+
+            }, 1000);
+
+        };
 
 
-        // var startingNumber = 60;
+        //
+        // Inits & Event Listeners
+        //
 
-        // console.log("Count down from... ", startingNumber);
+        // Start the timer on page load
+        startTimer();
 
-        // var countDown = window.setInterval(function (startingNumber) {
-        //     //decrease countDown by 1
-        //     startingNumber--;
+        // When the restart button is clicked, restart the timer
+        document.addEventListener('click', function (event) {
+            if (event.target.hasAttribute('data-restart-timer')) {
+                startTimer();
+            }
+        }, false);
 
-        //     if (countDown = 0) {
-        //         console.log("THE END");
+
+        // MY ANSWER...
+
+        // var app = document.querySelector("#app");
+
+        // // The count
+        // var count = 60;
+
+        // console.log("Counting down from... ");
+
+        // // Run a function every 1,000ms (1s)
+        // var countDown = window.setInterval(function () {
+
+        //     // Log the count value to the console
+        //     console.log(count);
+
+        //     // Increase count by 1
+        //     count--;
+
+        //     // If the value of count is less than 0, clear the interval
+        //     if (count < 0) {
         //         window.clearInterval(countDown);
+        //         console.log('/end');
         //     }
+
         // }, 1000);
+
+        // app = countDown;
+
+        // // var startingNumber = 60;
+
+        // // console.log("Count down from... ", startingNumber);
+
+        // // var countDown = window.setInterval(function (startingNumber) {
+        // //     //decrease countDown by 1
+        // //     startingNumber--;
+
+        // //     if (countDown = 0) {
+        // //         console.log("THE END");
+        // //         window.clearInterval(countDown);
+        // //     }
+        // // }, 1000);
 
     </script>
 </body>
