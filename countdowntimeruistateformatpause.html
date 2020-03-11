@@ -17,7 +17,7 @@
         }
 
         p {
-            margin-top: 0;
+            margin: 0 0.5em;
             padding: 0;
         }
     </style>
@@ -43,7 +43,8 @@
         // The state/data object
         var data = {
             timer: duration,
-            done: false
+            done: false,
+            paused: true
         };
 
         // A placeholder for the countdown interval
@@ -69,7 +70,12 @@
             var minutes = parseInt(data.timer / 60, 10);
             var seconds = data.timer % 60;
 
-            return minutes.toString() + ':' + seconds.toString().padStart(2, '0');
+            // Create the markup string
+            var html =
+                '<p>' + minutes.toString() + ':' + seconds.toString().padStart(2, '0') + '</p>' +
+                '<p>' + (data.paused ? '<button data-start-timer>Start</button>' : '<button data-pause-timer>Pause</button>') + ' <button data-restart-timer>Restart</button></p>';
+
+            return html;
 
         };
 
@@ -87,18 +93,18 @@
         };
 
 		/**
-		 * Start the timer
+		 * Stop the countdown
 		 */
-        var startTimer = function () {
+        var stopCountdown = function () {
+            data.paused = true;
+            window.clearInterval(countdown);
+        };
 
-            // Reset the data
-            data.timer = duration;
-            data.done = false;
-
-            // Run an initial render
-            render();
-
-            // Update the timer every second
+		/**
+		 * Update the timer every second
+		 */
+        var startCountdown = function () {
+            data.paused = false;
             countdown = window.setInterval(function () {
 
                 // Get the new timer value
@@ -107,7 +113,7 @@
                 // If the timer hits 0, set as done
                 var done = time === 0 ? true : false;
 
-                // Update data and render new UI
+                // Update data
                 data.timer = time;
                 data.done = done;
 
@@ -116,10 +122,56 @@
 
                 // If the timer is done, stop it from running
                 if (done) {
-                    window.clearInterval(countdown);
+                    stopCountdown();
                 }
 
-            }, 100);
+            }, 1000);
+        };
+
+		/**
+		 * Start the timer
+		 */
+        var startTimer = function () {
+
+            // Reset the data
+            data.timer = duration;
+            data.done = false;
+
+            // Clear any existing timers
+            stopCountdown();
+
+            // Update the timer every second
+            startCountdown();
+
+            // Run an initial render
+            render();
+
+        };
+
+		/**
+		 * Handle click events
+		 * @return {Event} The event object
+		 */
+        var clickHandler = function (event) {
+
+            // If a restart button was clicked, start the timer
+            if (event.target.hasAttribute('data-restart-timer')) {
+                startTimer();
+            }
+
+            // If the start button was clicked, start the timer
+            // Restart the countdown
+            if (event.target.hasAttribute('data-start-timer')) {
+                startCountdown();
+                render();
+            }
+
+            // If the pause button was clicked, pause the timer
+            // Stop the countdown
+            if (event.target.hasAttribute('data-pause-timer')) {
+                stopCountdown();
+                render();
+            }
 
         };
 
@@ -128,15 +180,11 @@
         // Inits & Event Listeners
         //
 
-        // Start the timer on page load
-        startTimer();
+        // Render the timer on page load
+        render();
 
-        // When the restart button is clicked, restart the timer
-        document.addEventListener('click', function (event) {
-            if (event.target.hasAttribute('data-restart-timer')) {
-                startTimer();
-            }
-        }, false);
+        // Listen for clicks on the timer buttons
+        document.addEventListener('click', clickHandler, false);
     </script>
 </body>
 
