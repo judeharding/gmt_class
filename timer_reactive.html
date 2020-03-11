@@ -82,24 +82,39 @@
 		/**
 		 * Render the template into the DOM
 		 */
-        // var render = function () {
+        var render = function () {
 
-        //     // If there are no updates to the UI, do nothing
-        //     if (app.innerHTML === template()) return;
+            // If there are no updates to the UI, do nothing
+            if (app.innerHTML === template()) return;
 
-        //     // Update the UI
-        //     app.innerHTML = template();
-
-        // };
-
-        var setData = function () {
+            // Update the UI
             app.innerHTML = template();
+
         };
+
+		/**
+		 * Reactively update the data object
+		 * @param {Object} obj The updated data
+		 */
+        var setData = function (obj) {
+
+            // Update the data object
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    data[key] = obj[key];
+                }
+            }
+
+            // Render a new UI
+            render();
+
+        };
+
 		/**
 		 * Stop the countdown
 		 */
         var stopCountdown = function () {
-            data.paused = true;
+            setData({ paused: true });
             window.clearInterval(countdown);
         };
 
@@ -107,7 +122,7 @@
 		 * Update the timer every second
 		 */
         var startCountdown = function () {
-            data.paused = false;
+            setData({ paused: false });
             countdown = window.setInterval(function () {
 
                 // Get the new timer value
@@ -116,13 +131,11 @@
                 // If the timer hits 0, set as done
                 var done = time === 0 ? true : false;
 
-                // Update data
-                data.timer = time;
-                data.done = done;
-
-                // Render new UI
-                // render();
-                setData();
+                // Update data and render a fresh UI
+                setData({
+                    timer: time,
+                    done: done
+                });
 
                 // If the timer is done, stop it from running
                 if (done) {
@@ -137,19 +150,18 @@
 		 */
         var startTimer = function () {
 
-            // Reset the data
-            data.timer = duration;
-            data.done = false;
-
             // Clear any existing timers
             stopCountdown();
 
             // Update the timer every second
             startCountdown();
 
-            // Run an initial render
-            // render();
-            setData();
+            // Reset the data and render an initial UI
+            setData({
+                timer: duration,
+                done: false
+            });
+
         };
 
 		/**
@@ -167,16 +179,12 @@
             // Restart the countdown
             if (event.target.hasAttribute('data-start-timer')) {
                 startCountdown();
-                // render();
-                setData();
             }
 
             // If the pause button was clicked, pause the timer
             // Stop the countdown
             if (event.target.hasAttribute('data-pause-timer')) {
                 stopCountdown();
-                // render();
-                setData();
             }
 
         };
@@ -187,8 +195,7 @@
         //
 
         // Render the timer on page load
-        // render();
-        setData();
+        render();
 
         // Listen for clicks on the timer buttons
         document.addEventListener('click', clickHandler, false);
