@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Todos</title>
+
+    <style type="text/css">
+        body {
+            margin: 1em auto;
+            max-width: 40em;
+            width: 88%;
+        }
+
+        form {
+            margin-bottom: 2em;
+        }
+
+        label {
+            display: block;
+            width: 100%;
+        }
+
+        [type="checkbox"] {
+            margin-right: 0.5em;
+        }
+
+        .todos {
+            list-style: none;
+            margin: 0 0 1em;
+            padding: 0;
+        }
+
+        .todos li {
+            margin-bottom: 0.5em;
+        }
+
+        /**
+		 * @bugfix Prevent webkit from removing list semantics
+		 * 1. Add a non-breaking space
+		 * 2. Make sure it doesn't mess up the DOM flow
+		 */
+        .todos li:before {
+            content: "\200B";
+            /* 1 */
+            position: absolute;
+            /* 2 */
+        }
+
+        .todo-completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Todos</h1>
+
+    <form id="add-todos">
+        <label for="new-todo">What do you want to do?</label>
+        <input type="text" id="new-todo" autofocus>
+        <button>Add Todo</button>
+    </form>
+
+    <div id="app"></div>
+
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/reef@4/dist/reef.min.js"></script>
+    <script>
+        //
+        // Variables
+        //
+
+        // The new todo input field
+        var newTodo = document.querySelector('#new-todo');
+
+
+        //
+        // Methods
+        //
+
+		/**
+		 * Create a todo component
+		 */
+        var app = new Reef('#app', {
+            data: {
+                todos: []
+            },
+            template: function (props) {
+
+                // If there are no todos, ask the user to add some
+                if (props.todos.length < 1) {
+                    return '<p>You don\'t have any todos yet. Add some using the form above.</p>';
+                }
+
+                // Generate markup for todo items
+                return '<ul class="todos">' + props.todos.map(function (todo, index) {
+
+                    var todoHTML =
+                        '<li ' + (todo.completed ? 'class="todo-completed"' : '') + '>' +
+                        '<label for="todo-' + index + '">' +
+                        '<input type="checkbox" id="todo-' + index + '" data-todo="' + index + '" ' + (todo.completed ? 'checked' : '') + '>' +
+                        todo.item +
+                        '</label>' +
+                        '</li>';
+
+                    return todoHTML;
+                }).join('') + '</ul>';
+
+            }
+        });
+
+		/**
+		 * Handle form submit events
+		 * @param  {Event} event The Event object
+		 */
+        var submitHandler = function (event) {
+
+            // Only run for #add-todos form
+            if (event.target.id !== 'add-todos') return;
+
+            // Stop the form from reloading the page
+            event.preventDefault();
+
+            // If the #new-todo input has no value, do nothing
+            if (newTodo.value.length < 1) return;
+
+            // Get a copy of the todos
+            var todos = app.getData().todos;
+
+            // Update data object
+            todos.push({
+                item: newTodo.value,
+                completed: false
+            });
+
+            // Render fresh UI
+            app.setData({ todos: todos });
+
+            // Clear the field and return focus
+            newTodo.value = '';
+            newTodo.focus();
+
+        };
+
+		/**
+		 * Handle click events
+		 * @param  {Event} event The Event object
+		 */
+        var clickHandler = function (event) {
+
+            // Only run on todo items
+            var todo = event.target.getAttribute('data-todo');
+            if (!todo) return;
+
+            // Get a copy of the todos
+            var todos = app.getData().todos;
+            if (!todos[todo]) return;
+
+            // Update the todo state
+            todos[todo].completed = event.target.checked;
+
+            // Render a fresh UI
+            app.setData({ todos: todos });
+
+        };
+
+
+        //
+        // Inits & Event Listeners
+        //
+
+        // Render the initial UI
+        app.render();
+
+        // Listen for form submit events
+        document.addEventListener('submit', submitHandler, false);
+
+        // Listen for click events
+        document.addEventListener('click', clickHandler, false);
+    </script>
+</body>
+
+</html>
