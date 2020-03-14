@@ -85,15 +85,15 @@
             data: {
                 todos: []
             },
-            template: function (props) {
+            template: function (todoprops) {
 
                 // If there are no todos, ask the user to add some
-                if (props.todos.length < 1) {
+                if (todoprops.todos.length < 1) {
                     return '<p>You don\'t have any todos yet. Add some using the form above.</p>';
                 }
 
                 // Generate markup for todo items
-                return '<ul class="todos">' + props.todos.map(function (todo, index) {
+                return '<ul class="todos">' + todoprops.todos.map(function (todo, index) {
 
                     var todoHTML =
                         '<li ' + (todo.completed ? 'class="todo-completed"' : '') + '>' +
@@ -113,7 +113,7 @@
 		 * Handle form submit events
 		 * @param  {Event} event The Event object
 		 */
-        var submitHandler = function (event) {
+        var submitToDoHandler = function (event) {
 
             // Only run for #add-todos form
             if (event.target.id !== 'add-todos') return;
@@ -124,7 +124,7 @@
             // If the #new-todo input has no value, do nothing
             if (newTodo.value.length < 1) return;
 
-            // Get a copy of the todos
+            // Get an immutable copy of the todos
             var todos = app.getData().todos;
 
             // Update data object
@@ -146,13 +146,13 @@
 		 * Handle click events
 		 * @param  {Event} event The Event object
 		 */
-        var clickHandler = function (event) {
+        var clickCheckboxHandler = function (event) {
 
             // Only run on todo items
             var todo = event.target.getAttribute('data-todo');
             if (!todo) return;
 
-            // Get a copy of the todos
+            // Get an immutable copy  of the todos
             var todos = app.getData().todos;
             if (!todos[todo]) return;
 
@@ -173,10 +173,10 @@
         app.render();
 
         // Listen for form submit events
-        document.addEventListener('submit', submitHandler, false);
+        document.addEventListener('submit', submitToDoHandler, false);
 
         // Listen for click events
-        document.addEventListener('click', clickHandler, false);
+        document.addEventListener('click', clickCheckboxHandler, false);
     </script>
 </body>
 
