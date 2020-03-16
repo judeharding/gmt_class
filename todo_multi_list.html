@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Todos - Save and Delete</title>
+    <title>Todos - Routing</title>
 
     <style type="text/css">
         body {
@@ -54,11 +54,17 @@
 
 <body>
 
-    <h1>Todos - Save and Delete</h1>
+    <h1>Todos - Routing</h1>
 
-    <form id="add-todos">
-        <label for="new-todo">What do you want to do?</label>
-        <input type="text" id="new-todo" autofocus>
+    <form id="add-my-todos">
+        <label for="new-todo">What do YOU want to do?</label>
+        <input type="text" id="new-my-todo" autofocus>
+        <button>Add Todo</button>
+    </form>
+
+    <form id="add-all-todos">
+        <label for="new-todo">ALL Todo's?</label>
+        <input type="text" id="new-all-todo" autofocus>
         <button>Add Todo</button>
     </form>
 
@@ -69,14 +75,18 @@
         //
         // Variables
         //
-        // https://courses.gomakethings.com/academy/2020-01/project-review-todo-list-save-and-delete/
+
         // The new todo input field
-        var newTodo = document.querySelector('#new-todo');
+        var newMyTodo = document.querySelector('#new-my-todo');
+
+        var newAllTodo = document.querySelector('#new-all-todo');
 
         // Save the localStorage ID to a variable for easier configuration later
         var storageID = 'todos';
 
+        var allLists;
 
+        var individualList;
         //
         // Methods
         //
@@ -117,23 +127,23 @@
 		 * Handle form submit events
 		 * @param  {Event} event The Event object
 		 */
-        var submitHandler = function (event) {
+        var submitHandlerMyTodo = function (event) {
 
-            // Only run for #add-todos form
-            if (event.target.id !== 'add-todos') return;
+            // Only run for #add-my-todos form
+            if (event.target.id !== 'add-my-todos') return;
 
             // Stop the form from reloading the page
             event.preventDefault();
 
             // If the #new-todo input has no value, do nothing
-            if (newTodo.value.length < 1) return;
+            if (newMyTodo.value.length < 1) return;
 
             // Get a copy of the todos
             var todos = app.getData().todos;
 
             // Update data object
             todos.push({
-                item: newTodo.value,
+                item: newMyTodo.value,
                 completed: false
             });
 
@@ -141,11 +151,39 @@
             app.setData({ todos: todos });
 
             // Clear the field and return focus
-            newTodo.value = '';
-            newTodo.focus();
+            newMyTodo.value = '';
+            newMyTodo.focus();
 
         };
 
+        var submitHandlerAllTodo = function (event) {
+
+            // // Only run for #add-my-todos form
+            if (event.target.id !== 'add-all-todos') return;
+
+            // Stop the form from reloading the page
+            event.preventDefault();
+
+            // If the #new-todo input has no value, do nothing
+            if (newAllTodo.value.length < 1) return;
+
+            // Get a copy of the todos
+            var todos = app.getData().todos;
+
+            // Update data object
+            todos.push({
+                item: newAllTodo.value,
+                completed: false
+            });
+
+            // Render fresh UI
+            app.setData({ todos: todos });
+
+            // Clear the field and return focus
+            newAllTodo.value = '';
+            newAllTodo.focus();
+
+        };
 		/**
 		 * Mark todo item as complete
 		 * @param  {Event} event The event object
@@ -239,7 +277,8 @@
         loadTodos();
 
         // Listen for form submit events
-        document.addEventListener('submit', submitHandler, false);
+        document.addEventListener('submit', submitHandlerMyTodo, false);
+        document.addEventListener('submit', submitHandlerAllTodo, false);
 
         // Listen for click events
         document.addEventListener('click', clickHandler, false);
