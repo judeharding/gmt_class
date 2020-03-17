@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>testing</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+</body>
+<script>
+
+    var div = document.querySelector("#app");
+    div.innerHTML = "<h1>hello world</h1>"
+
+    div.innerHTML += "<script>alert('xss attack');<\/script>";
+
+    div.innerHTML += '<script deferred>alert("another xss attack");<\/script>';
+
+    div.textContent += '<script deferred>alert("another xss attack");<\/script>';
+
+    div.innerHTML += '<img src=x onerror="alert(\'one more attack\')">';
+
+    div.textContent += '<img src=x onerror="alert(\'one more attack\')">';
+
+
+    var sanitizeHTML = function (apistringfrom3rdparty) {
+        var temp = document.createElement("div"); // place holder for 3rd party string
+        temp.textContent = apistringfrom3rdparty;
+        return temp.innerHTML; // returns the apistringfrom3rdparty in a text format
+        //check dompurify for strings from api's that need to have SOME markeup like bold
+    };
+
+    div.innerHTML = "<h1>" + sanitizeHTML('<img src=x onerror`alert(\'XSS ATTACK\')`>') + "<\/h1>";
+</script>
+
+</html>
