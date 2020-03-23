@@ -188,28 +188,47 @@
         );
     };
 
-
-    // listening for scrolls 
-    window.addEventListener("scroll", function (event) {
-
+    var loadImage = function (event) {
         // check each image to see if it is in the viewport
         for (let i = 0; i < images.length; i++) {
-            if (isInViewport(images[i])) {
-                // console.log(!images[i]) continue;
 
-                // get image url
+            // if image is NOT in viewport, bail
+            if (!isInViewport(images[i])) {
+
+                // get image
                 var img = images[i].getAttribute("data-image");
                 if (!img) continue;
 
                 // add the image to the DOM
                 images[i].innerHTML = "<img src='" + img + "'>";
 
+                // //check for caption text
+                var captionText = images[i].getAttribute("data-caption");
+                if (captionText) {
+                    // create caption text and image
+                    var caption = document.createElement("caption");
+                    caption.textContent = captionText;
+                    // insert caption into the dom
+                    var img = images[i].querySelector("img");
+                    images[i].insertBefore(caption, img.nextSibling);
+                }
 
+                // after the image loads, remove the data - attribute
+                // you can see the images reload everytime in viewport 
+                console.log(images[i]);
 
+                // now remove the multiple image load 
+                images[i].removeAttribute("data-image");
+                console.log(images[i]);
             }
-
         }
-    }, false);
+    };
+
+    // load any images in the viewport on page load
+    loadImage();
+
+    // listening for scrolls 
+    window.addEventListener("scroll", loadImage, false);
 
 
 
