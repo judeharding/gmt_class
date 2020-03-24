@@ -12,27 +12,25 @@
     <h2>xxx</h2>
 </body>
 <script>
-    var lunch = {
-        sand: "turkey",
-        chips: "kettle",
-        drink: "coke"
+
+
+    var getExpirationDate = function (expTime) {
+        return new Date(+new Date() + expTime).toUTCString();
     };
 
-    var moreLunch = lunch;
+    // document.cookie = "sandwich=turkey; expires=Tue, 24 Mar 2020 19:32:00 GMT";
+    document.cookie = "sandwich=turkey; expires=" + getExpirationDate(5000 * 60);
+    document.cookie = "drink=soda";
+    console.log(document.cookie); // will log as a string separated by a ;_
 
-    var evenmorelunch = Object.assign({}, moreLunch);
+    var getCookieInfo = function (cookie) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";".shift());
+    };
 
-    console.log(lunch);
-
-    delete moreLunch.drink;
-
-    console.log(lunch);
-    console.log(moreLunch);
-    console.log(evenmorelunch);
-
-
-
-
+    var cookieVal = getCookieInfo("sandwich");
+    console.log(cookieVal);
 
 
 </script>
@@ -80,6 +78,27 @@
 
 <!-- -------------- -->
 
+<!-- VARIABLES AND SCOPE -->
+
+<!-- var lunch = {
+    sand: "turkey",
+    chips: "kettle",
+    drink: "coke"
+};
+
+var moreLunch = lunch;
+
+// immutable copy of lunch
+var evenmorelunch = Object.assign({}, moreLunch);
+
+console.log(lunch);
+
+// deletes drink from morelunch AND lunch
+delete moreLunch.drink;
+
+console.log(lunch);
+console.log(moreLunch);
+console.log(evenmorelunch); -->
 
 
 <!-- // using capitals because i am returning a constructor
