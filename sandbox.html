@@ -14,23 +14,38 @@
 <script>
 
 
+
+    // WORKING WITH COOKIES IN FIREFOX
     var getExpirationDate = function (expTime) {
+        // the +new Date below creates a date/time RIGHT NOW which 
+        // 2nd date which is the expiration date based on the 
+        // users local time called expTime
         return new Date(+new Date() + expTime).toUTCString();
     };
 
-    // document.cookie = "sandwich=turkey; expires=Tue, 24 Mar 2020 19:32:00 GMT";
+    document.cookie = "sandwich=turkey; expires=Tue, 26 Mar 2020 19:32:00 GMT";
+
+    // the expiration date below is 5 seconds from right now 
     document.cookie = "sandwich=turkey; expires=" + getExpirationDate(5000 * 60);
     document.cookie = "drink=soda";
-    console.log(document.cookie); // will log as a string separated by a ;_
+    // will log as a string separated by a ;_
+    console.log(document.cookie);
 
-    var getCookieInfo = function (cookie) {
+
+    var getCookieInfo = function (cookieName) {
         var value = "; " + document.cookie;
-        var parts = value.split("; " + name + "=");
-        if (parts.length == 2) return parts.pop().split(";".shift());
+        var parts = value.split("; " + cookieName + "=");
+        // below, checking for name/value pairs 
+        if (parts.length == 2) return parts.pop().split(";").shift();
     };
 
     var cookieVal = getCookieInfo("sandwich");
     console.log(cookieVal);
+
+    // DELETING COOKIE  
+    document.cookie = "sandwich=turkey; expires" + getExpirationDate(-1);
+    console.log("deleting cookie ", document.cookie);
+
 
 
 </script>
